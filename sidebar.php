@@ -106,7 +106,7 @@
           </li>
           <?php endif; ?>
 
-          <?php if ($_SESSION['level'] === 'admin' || $_SESSION['level'] === 'pemilik'): ?>
+          <?php if ($_SESSION['level'] === 'pemilik'): ?>
           <hr class="sidebar-divider">
 
           <div class="sidebar-heading">
