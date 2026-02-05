@@ -17,6 +17,7 @@
                   <span>Dashboard</span></a>
           </li>
 
+          <?php if ($_SESSION['level'] === 'admin'): ?>
           <hr class="sidebar-divider">
 
           <div class="sidebar-heading">
@@ -77,7 +78,9 @@
                   <span>Karyawan</span>
               </a>
           </li>
+          <?php endif; ?>
 
+          <?php if ($_SESSION['level'] === 'admin' || $_SESSION['level'] === 'pemilik'): ?>
           <hr class="sidebar-divider">
 
           <div class="sidebar-heading">
@@ -89,6 +92,7 @@
                   <i class="fas fa-fw fa-file-pdf"></i>
                   <span>Export Laporan</span></a>
           </li>
+          <?php endif; ?>
 
           <hr class="sidebar-divider d-none d-md-block">
 

@@ -300,6 +300,18 @@
           <p class="text-gray-600">Silakan masuk ke akun Anda</p>
         </div>
         
+        <?php if(isset($_GET['pesan'])): ?>
+        <?php if($_GET['pesan'] == "gagal"): ?>
+        <div class="alert alert-danger" role="alert">
+          Login gagal! Email atau password salah.
+        </div>
+        <?php elseif($_GET['pesan'] == "belum_login"): ?>
+        <div class="alert alert-warning" role="alert">
+          Silakan login terlebih dahulu!
+        </div>
+        <?php endif; ?>
+        <?php endif; ?>
+        
         <form class="user" action="proses-login.php" method="post" id="loginForm">
           <div class="form-group mb-3">
             <input type="email" name="email" class="form-control form-control-user form-control-formal" id="exampleInputEmail" aria-describedby="emailHelp" value="admin@gmail.com" placeholder="Alamat Email..." autocomplete="off">

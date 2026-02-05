@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 05, 2026 at 09:05 AM
+-- Generation Time: Feb 05, 2026 at 09:46 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.1
 
@@ -32,15 +32,17 @@ CREATE TABLE `admin` (
   `id_admin` int(11) NOT NULL,
   `nama` varchar(40) NOT NULL,
   `email` varchar(40) NOT NULL,
-  `pass` varchar(40) NOT NULL
+  `pass` varchar(40) NOT NULL,
+  `level` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`id_admin`, `nama`, `email`, `pass`) VALUES
-(1, 'admin', 'admin@gmail.com', 'admin');
+INSERT INTO `admin` (`id_admin`, `nama`, `email`, `pass`, `level`) VALUES
+(1, 'admin', 'admin@gmail.com', 'admin', 'admin'),
+(3, 'Pemilik', 'pemilik@gmail.com', 'pemilik', 'pemilik');
 
 -- --------------------------------------------------------
 
@@ -622,7 +624,7 @@ ALTER TABLE `pengeluaran`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `arus_kas`

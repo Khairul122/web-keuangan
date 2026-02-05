@@ -13,6 +13,8 @@ Sistem akuntansi berbasis web untuk mengelola keuangan CV Bina Padi Sabatang, se
 - **Laporan Keuangan**: Generate laporan dalam format PDF
 - **Sistem Jurnal Otomatis**: Implementasi prinsip akuntansi double-entry
 - **Dashboard Analitik**: Visualisasi data keuangan
+- **Multi-Level User**: Dukungan untuk admin dan pemilik dengan hak akses berbeda
+- **Desain Web 3.0**: Tampilan modern dengan efek glassmorphism dan animasi
 
 ## Teknologi yang Digunakan
 
@@ -23,6 +25,7 @@ Sistem akuntansi berbasis web untuk mengelola keuangan CV Bina Padi Sabatang, se
 - **Library Grafik**: Chart.js
 - **Library PDF**: mPDF
 - **Library Tabel**: DataTables
+- **Animasi**: Anime.js
 
 ## Instalasi
 
@@ -36,7 +39,7 @@ Sistem akuntansi berbasis web untuk mengelola keuangan CV Bina Padi Sabatang, se
 
 Database `keuangan` terdiri dari beberapa tabel penting:
 
-- `admin`: Informasi login administrator
+- `admin`: Informasi login administrator (dengan kolom level untuk multi-user)
 - `pemasukan`: Data transaksi pemasukan
 - `pengeluaran`: Data transaksi pengeluaran
 - `hutang`: Data kewajiban hutang
@@ -54,7 +57,7 @@ Berikut adalah beberapa tangkapan layar dari sistem:
 
 ### 1. Halaman Login
 ![Login Page](screenshot/login-page.png)
-*Halaman autentikasi untuk mengakses sistem*
+*Halaman autentikasi dengan desain Web 3.0*
 
 ### 2. Dashboard Utama
 ![Dashboard](screenshot/dashboard.png)
@@ -72,6 +75,32 @@ Berikut adalah beberapa tangkapan layar dari sistem:
 ![Financial Reports](screenshot/financial-reports.png)
 *Preview laporan keuangan dalam format PDF*
 
+## Hak Akses Multi-Level
+
+Sistem mendukung dua level pengguna:
+
+### Admin
+- Akses ke semua fitur sistem
+- Manajemen transaksi (pemasukan, pengeluaran, hutang, dll.)
+- Manajemen karyawan
+- Generate laporan
+- Dapat menambahkan admin lain (jika memiliki hak akses)
+
+### Pemilik
+- Akses ke dashboard
+- Generate laporan
+- Tidak dapat mengakses fitur manajemen transaksi harian
+- Dapat menambahkan admin lain
+
+## Desain Web 3.0
+
+Sistem menggunakan desain modern dengan:
+- Efek glassmorphism
+- Animasi halus menggunakan Anime.js
+- Layout responsif setengah layar pada halaman login
+- Warna formal tanpa gradient
+- Interaksi pengguna yang lebih intuitif
+
 ## Konfigurasi
 
 Pastikan konfigurasi database benar pada file `koneksi.php`:
@@ -85,10 +114,11 @@ $db = 'keuangan';
 
 ## Penggunaan
 
-1. Akses halaman login dengan email `admin@gmail.com` dan password `admin`
-2. Gunakan menu navigasi untuk mengakses fitur-fitur sistem
-3. Tambahkan transaksi keuangan melalui menu Pendapatan dan Pengeluaran
-4. Generate laporan keuangan dari menu Laporan
+1. Akses halaman login dengan email `admin@gmail.com` dan password `admin` atau `pemilik@gmail.com` dan password `pemilik`
+2. Sistem akan otomatis menyesuaikan menu berdasarkan level pengguna
+3. Gunakan menu navigasi untuk mengakses fitur-fitur sistem
+4. Tambahkan transaksi keuangan melalui menu yang tersedia (tergantung level pengguna)
+5. Generate laporan keuangan dari menu Laporan
 
 ## Sistem Jurnal Otomatis
 

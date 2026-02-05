@@ -12,7 +12,7 @@ require 'cek-sesi.php';
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Dashboard - Admin</title>
+  <title>Dashboard - <?php echo ucfirst($_SESSION['level']); ?></title>
 
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -96,7 +96,7 @@ require 'cek-sesi.php';
         <i class="fa fa-bars"></i>
       </button>
 
-      <h1> Selamat Datang, <?= $_SESSION['nama'] ?></h1>
+      <h1> Selamat Datang, <?= $_SESSION['nama'] ?> (<?= ucfirst($_SESSION['level']) ?>)</h1>
 
       <?php require 'user.php'; ?>
 
@@ -106,7 +106,9 @@ require 'cek-sesi.php';
 
       <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+        <?php if ($_SESSION['level'] === 'admin' || $_SESSION['level'] === 'pemilik'): ?>
         <a href="export-semua.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Download Laporan</a>
+        <?php endif; ?>
       </div>
 
       <div class="row">
