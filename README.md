@@ -63,7 +63,7 @@ Berikut adalah beberapa tangkapan layar dari sistem:
 ![Dashboard](screenshot/dashboard.png)
 *Tampilan utama dengan ringkasan keuangan*
 
-### 3. Dashboard Admin
+### 3. Dashboard Pemilik
 ![Dashboard](screenshot/dashboard-admin.png)
 *Tampilan utama dengan ringkasan keuangan*
 
