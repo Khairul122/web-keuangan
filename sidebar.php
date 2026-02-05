@@ -69,6 +69,19 @@
           <hr class="sidebar-divider">
 
           <div class="sidebar-heading">
+              Master Data
+          </div>
+
+          <li class="nav-item">
+              <a class="nav-link collapsed" href="coa.php">
+                  <i class="fas fa-fw fa-book"></i>
+                  <span>COA</span>
+              </a>
+          </li>
+
+          <hr class="sidebar-divider">
+
+          <div class="sidebar-heading">
               Karyawan
           </div>
 

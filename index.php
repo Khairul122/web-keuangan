@@ -109,6 +109,42 @@ require 'cek-sesi.php';
         <?php if ($_SESSION['level'] === 'admin' || $_SESSION['level'] === 'pemilik'): ?>
         <a href="export-semua.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Download Laporan</a>
         <?php endif; ?>
+        
+        <?php if(isset($_GET['pesan'])): ?>
+        <?php if($_GET['pesan'] == "berhasil_tambah"): ?>
+        <div class="alert alert-success" role="alert">
+          Data berhasil ditambahkan!
+        </div>
+        <?php elseif($_GET['pesan'] == "berhasil_ubah"): ?>
+        <div class="alert alert-info" role="alert">
+          Data berhasil diubah!
+        </div>
+        <?php elseif($_GET['pesan'] == "berhasil_nonaktif"): ?>
+        <div class="alert alert-warning" role="alert">
+          Akun berhasil dinonaktifkan!
+        </div>
+        <?php elseif($_GET['pesan'] == "berhasil_aktif"): ?>
+        <div class="alert alert-success" role="alert">
+          Akun berhasil diaktifkan!
+        </div>
+        <?php elseif($_GET['pesan'] == "gagal"): ?>
+        <div class="alert alert-danger" role="alert">
+          Terjadi kesalahan!
+        </div>
+        <?php elseif($_GET['pesan'] == "akun_digunakan"): ?>
+        <div class="alert alert-danger" role="alert">
+          Akun tidak dapat dinonaktifkan karena sedang digunakan!
+        </div>
+        <?php elseif($_GET['pesan'] == "nomor_akun_exists"): ?>
+        <div class="alert alert-danger" role="alert">
+          Nomor akun sudah digunakan!
+        </div>
+        <?php elseif($_GET['pesan'] == "forbidden"): ?>
+        <div class="alert alert-danger" role="alert">
+          Akses ditolak!
+        </div>
+        <?php endif; ?>
+        <?php endif; ?>
       </div>
 
       <div class="row">
