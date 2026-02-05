@@ -92,6 +92,9 @@
               </a>
           </li>
 
+          <?php endif; ?>
+
+          <?php if ($_SESSION['level'] === 'pemilik'): ?>
           <hr class="sidebar-divider">
 
           <div class="sidebar-heading">
