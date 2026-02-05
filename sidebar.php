@@ -69,7 +69,7 @@
           <hr class="sidebar-divider">
 
           <div class="sidebar-heading">
-              Transaksi
+              Jurnal
           </div>
 
           <li class="nav-item">
