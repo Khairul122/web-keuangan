@@ -469,10 +469,10 @@ while ($data = mysqli_fetch_assoc($result)) {
                           '<td>' +
                             '<select name="akun[]" class="form-control" required>' +
                               '<option value="">-- Pilih Akun --</option>' +
-                              <?php 
+                              <?php
                               $coa_query = mysqli_query($koneksi, "SELECT * FROM chart_of_accounts WHERE is_active = 1 ORDER BY nomor_akun");
                               while ($coa = mysqli_fetch_assoc($coa_query)) {
-                                echo '"<option value=\"'.$coa['id_akun'].'\" ' + (line.id_akun == '.$coa['id_akun'].' ? \'selected\' : \'\') + '>'.$coa['nomor_akun'].' - '.htmlspecialchars(addslashes($coa['nama_akun'])).'</option>" + ';
+                                echo '"<option value=\"'.$coa['id_akun'].'\" " + (line.id_akun == '.$coa['id_akun'].' ? "selected" : "") + ">'.$coa['nomor_akun'].' - '.htmlspecialchars(addslashes($coa['nama_akun']), ENT_QUOTES).'"+ "</option>" + ';
                               }
                               echo '"";';
                               ?> +
@@ -491,7 +491,7 @@ while ($data = mysqli_fetch_assoc($result)) {
                            <?php 
                            $coa_query = mysqli_query($koneksi, "SELECT * FROM chart_of_accounts WHERE is_active = 1 ORDER BY nomor_akun");
                            while ($coa = mysqli_fetch_assoc($coa_query)) {
-                             echo '"<option value=\"'.$coa['id_akun'].'\">'.$coa['nomor_akun'].' - '.htmlspecialchars(addslashes($coa['nama_akun'])).'</option>" + ';
+                             echo '"<option value=\"'.$coa['id_akun'].'\">'.$coa['nomor_akun'].' - '.htmlspecialchars(addslashes($coa['nama_akun']), ENT_QUOTES).'</option>" + ';
                            }
                            echo '"";';
                            ?> +
@@ -540,8 +540,9 @@ while ($data = mysqli_fetch_assoc($result)) {
                 <?php
                 $coa_query = mysqli_query($koneksi, "SELECT * FROM chart_of_accounts WHERE is_active = 1 ORDER BY nomor_akun");
                 while ($coa = mysqli_fetch_assoc($coa_query)) {
-                  echo "<option value='".$coa['id_akun']."'>".$coa['nomor_akun']." - ".htmlspecialchars($coa['nama_akun'])."</option>";
+                  echo '"<option value=\"'.$coa['id_akun'].'\">'.$coa['nomor_akun'].' - '.htmlspecialchars($coa['nama_akun'], ENT_QUOTES).'</option>" + ';
                 }
+                echo '"";';
                 ?>
               </select>
             </td>
@@ -563,8 +564,9 @@ while ($data = mysqli_fetch_assoc($result)) {
                 <?php
                 $coa_query = mysqli_query($koneksi, "SELECT * FROM chart_of_accounts WHERE is_active = 1 ORDER BY nomor_akun");
                 while ($coa = mysqli_fetch_assoc($coa_query)) {
-                  echo "<option value='".$coa['id_akun']."'>".$coa['nomor_akun']." - ".htmlspecialchars($coa['nama_akun'])."</option>";
+                  echo '"<option value=\"'.$coa['id_akun'].'\">'.$coa['nomor_akun'].' - '.htmlspecialchars($coa['nama_akun'], ENT_QUOTES).'</option>" + ';
                 }
+                echo '"";';
                 ?>
               </select>
             </td>
