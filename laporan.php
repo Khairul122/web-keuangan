@@ -151,6 +151,15 @@ require 'cek-sesi.php';
                                         <a href="export-arus-kas.php" type="button" class="btn btn-primary btn-md"><i class="fa fa-download"></i></a>
                                     </td>
                                 </tr>
+                                
+                                <!-- Hutang -->
+                                <tr>
+                                    <td colspan="3" style="text-align: left;">Hutang</td>
+                                    <td>
+                                        <!-- Button untuk modal -->
+                                        <a href="export-hutang.php" type="button" class="btn btn-primary btn-md"><i class="fa fa-download"></i></a>
+                                    </td>
+                                </tr>
                             </tbody>
 
                         </table>
