@@ -1,0 +1,12 @@
+RewriteEngine On
+RewriteBase /
+
+# Redirect to login.php for root access
+RewriteRule ^$ /login.php [L]
+
+# If the request is not for a valid file or directory
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Rewrite all other URLs to login.php
+RewriteRule ^(.*)$ /login.php [L]

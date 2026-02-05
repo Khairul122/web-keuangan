@@ -1,0 +1,43 @@
+# Environment specific files
+.env
+.env.local
+.env.production
+.env.development
+
+# Database files
+*.sql
+database/seeds/
+
+# Log files
+*.log
+log.txt
+
+# Dependency directories
+node_modules/
+bower_components/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# PHP/Server specific
+vendor/composer/
+composer.phar
+composer.lock
+
+# Backup files
+*.bak
+*.tmp
+*~
