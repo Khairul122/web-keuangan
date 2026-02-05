@@ -32,7 +32,6 @@ if ($_SESSION['level'] !== 'admin' && $_SESSION['level'] !== 'pemilik') {
   <?php
   require('koneksi.php');
   require('sidebar.php');
-  require_once 'includes/functions-jurnal.php';
   ?>
 
   <div id="content">
@@ -40,16 +39,31 @@ if ($_SESSION['level'] !== 'admin' && $_SESSION['level'] !== 'pemilik') {
     <?php require('navbar.php'); ?>
 
     <div class="container-fluid">
+      <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Jurnal Umum</h1>
+        <?php if ($_SESSION['level'] === 'admin'): ?>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalTambah">
+          <i class="fas fa-plus fa-sm text-white-50"></i> Tambah Jurnal
+        </button>
+        <?php endif; ?>
+      </div>
+
       <div class="row">
-
         <div class="col-12">
-          <?php if ($_SESSION['level'] === 'admin'): ?>
-          <button type="button" class="btn btn-success mb-3" style="margin:5px" data-toggle="modal" data-target="#myModalTambah"><i class="fa fa-plus"> Tambah Jurnal</i></button>
-          <?php endif; ?>
-
           <div class="card shadow mb-4">
-            <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Jurnal Umum</h6>
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+              <h6 class="m-0 font-weight-bold text-primary">Daftar Jurnal Umum</h6>
+              <div class="dropdown no-arrow">
+                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                  <div class="dropdown-header">Opsi:</div>
+                  <a class="dropdown-item" href="#" data-toggle="modal" data-target="#myModalTambah">Tambah Jurnal</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModalLong">Bantuan</a>
+                </div>
+              </div>
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -62,6 +76,7 @@ if ($_SESSION['level'] !== 'admin' && $_SESSION['level'] !== 'pemilik') {
                       <th>Tipe Transaksi</th>
                       <th>Total Debit</th>
                       <th>Total Kredit</th>
+                      <th>Status</th>
                       <?php if ($_SESSION['level'] === 'admin'): ?>
                       <th>Aksi</th>
                       <?php endif; ?>
@@ -80,27 +95,38 @@ if ($_SESSION['level'] !== 'admin' && $_SESSION['level'] !== 'pemilik') {
                       
                       $total_debit = $lines_result['sum_debit'];
                       $total_kredit = $lines_result['sum_kredit'];
+                      
+                      // Determine status based on balance
+                      $status_text = ($total_debit == $total_kredit) ? 'Seimbang' : 'Tidak Seimbang';
+                      $status_class = ($total_debit == $total_kredit) ? 'success' : 'warning';
                     ?>
                       <tr>
-                        <td><?= $data['nomor_jurnal'] ?></td>
+                        <td><strong><?= $data['nomor_jurnal'] ?></strong></td>
                         <td><?= date('d/m/Y', strtotime($data['tanggal'])) ?></td>
-                        <td><?= $data['keterangan'] ?></td>
+                        <td><?= substr($data['keterangan'], 0, 50) ?><?= strlen($data['keterangan']) > 50 ? '...' : '' ?></td>
                         <td>
                           <?php 
-                          if($data['tipe_ref_transaksi'] == 'pemasukan') echo 'Pemasukan';
-                          elseif($data['tipe_ref_transaksi'] == 'pengeluaran') echo 'Pengeluaran';
-                          elseif($data['tipe_ref_transaksi'] == 'hutang') echo 'Hutang';
-                          else echo 'Manual';
+                          if($data['tipe_ref_transaksi'] == 'pemasukan') echo '<span class="badge badge-info">Pemasukan</span>';
+                          elseif($data['tipe_ref_transaksi'] == 'pengeluaran') echo '<span class="badge badge-danger">Pengeluaran</span>';
+                          elseif($data['tipe_ref_transaksi'] == 'hutang') echo '<span class="badge badge-warning">Hutang</span>';
+                          else echo '<span class="badge badge-secondary">Manual</span>';
                           ?>
                         </td>
-                        <td>Rp. <?= number_format($total_debit, 2, ',', '.') ?></td>
-                        <td>Rp. <?= number_format($total_kredit, 2, ',', '.') ?></td>
+                        <td class="text-right">Rp. <?= number_format($total_debit, 2, ',', '.') ?></td>
+                        <td class="text-right">Rp. <?= number_format($total_kredit, 2, ',', '.') ?></td>
+                        <td><span class="badge badge-<?= $status_class ?>"><?= $status_text ?></span></td>
                         <?php if ($_SESSION['level'] === 'admin'): ?>
-                        <td>
-                          <a href="#" type="button" class="fa fa-eye btn btn-info btn-sm" data-toggle="modal" data-target="#detailModal<?= $data['id_jurnal']; ?>"> Detail</a>
+                        <td class="text-center">
+                          <a href="#" type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#detailModal<?= $data['id_jurnal']; ?>" title="Lihat Detail">
+                            <i class="fas fa-eye"></i>
+                          </a>
                           <?php if($data['tipe_ref_transaksi'] == 'manual'): ?>
-                          <a href="#" type="button" class="fa fa-edit btn btn-primary btn-sm" data-toggle="modal" data-target="#editModal<?= $data['id_jurnal']; ?>"> Edit</a>
-                          <a href="hapus-jurnal.php?id_jurnal=<?= $data['id_jurnal']; ?>" onclick="return confirm('Anda Yakin Ingin Menghapus Jurnal Ini?')" class="btn btn-danger btn-sm">Hapus</a>
+                          <a href="#" type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editModal<?= $data['id_jurnal']; ?>" title="Edit Jurnal">
+                            <i class="fas fa-edit"></i>
+                          </a>
+                          <a href="hapus-jurnal.php?id_jurnal=<?= $data['id_jurnal']; ?>" onclick="return confirm('Anda Yakin Ingin Menghapus Jurnal Ini?')" class="btn btn-danger btn-sm" title="Hapus Jurnal">
+                            <i class="fas fa-trash"></i>
+                          </a>
                           <?php endif; ?>
                         </td>
                         <?php endif; ?>
@@ -110,44 +136,44 @@ if ($_SESSION['level'] !== 'admin' && $_SESSION['level'] !== 'pemilik') {
                       <div class="modal fade" id="detailModal<?= $data['id_jurnal']; ?>" role="dialog">
                         <div class="modal-dialog modal-lg">
                           <div class="modal-content">
-                            <div class="modal-header">
+                            <div class="modal-header bg-primary text-white">
                               <h4 class="modal-title">Detail Jurnal - <?= $data['nomor_jurnal'] ?></h4>
-                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                              <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
                             </div>
                             <div class="modal-body">
-                              <div class="row">
+                              <div class="row mb-3">
                                 <div class="col-md-6">
                                   <p><strong>Tanggal:</strong> <?= date('d/m/Y', strtotime($data['tanggal'])) ?></p>
                                   <p><strong>Keterangan:</strong> <?= $data['keterangan'] ?></p>
                                   <p><strong>Tipe Transaksi:</strong> 
                                     <?php 
-                                    if($data['tipe_ref_transaksi'] == 'pemasukan') echo 'Pemasukan';
-                                    elseif($data['tipe_ref_transaksi'] == 'pengeluaran') echo 'Pengeluaran';
-                                    elseif($data['tipe_ref_transaksi'] == 'hutang') echo 'Hutang';
-                                    else echo 'Manual';
+                                    if($data['tipe_ref_transaksi'] == 'pemasukan') echo '<span class="badge badge-info">Pemasukan</span>';
+                                    elseif($data['tipe_ref_transaksi'] == 'pengeluaran') echo '<span class="badge badge-danger">Pengeluaran</span>';
+                                    elseif($data['tipe_ref_transaksi'] == 'hutang') echo '<span class="badge badge-warning">Hutang</span>';
+                                    else echo '<span class="badge badge-secondary">Manual</span>';
                                     ?>
                                   </p>
                                 </div>
                                 <div class="col-md-6">
                                   <p><strong>Total Debit:</strong> Rp. <?= number_format($total_debit, 2, ',', '.') ?></p>
                                   <p><strong>Total Kredit:</strong> Rp. <?= number_format($total_kredit, 2, ',', '.') ?></p>
-                                  <p><strong>Seimbang:</strong> 
+                                  <p><strong>Status:</strong> 
                                     <?php 
-                                    if($total_debit == $total_kredit) echo '<span class="text-success">Ya</span>';
-                                    else echo '<span class="text-danger">Tidak</span>';
+                                    if($total_debit == $total_kredit) echo '<span class="badge badge-success">Seimbang</span>';
+                                    else echo '<span class="badge badge-warning">Tidak Seimbang</span>';
                                     ?>
                                   </p>
                                 </div>
                               </div>
                               
-                              <h5>Baris Jurnal:</h5>
+                              <h5 class="mb-3">Baris Jurnal:</h5>
                               <div class="table-responsive">
-                                <table class="table table-sm">
-                                  <thead>
+                                <table class="table table-sm table-striped">
+                                  <thead class="thead-light">
                                     <tr>
                                       <th>Nama Akun</th>
-                                      <th>Debit</th>
-                                      <th>Kredit</th>
+                                      <th class="text-right">Debit</th>
+                                      <th class="text-right">Kredit</th>
                                     </tr>
                                   </thead>
                                   <tbody>
@@ -157,8 +183,8 @@ if ($_SESSION['level'] !== 'admin' && $_SESSION['level'] !== 'pemilik') {
                                     ?>
                                       <tr>
                                         <td><?= $line['nama_akun'] ?></td>
-                                        <td>Rp. <?= number_format($line['debit'], 2, ',', '.') ?></td>
-                                        <td>Rp. <?= number_format($line['kredit'], 2, ',', '.') ?></td>
+                                        <td class="text-right">Rp. <?= number_format($line['debit'], 2, ',', '.') ?></td>
+                                        <td class="text-right">Rp. <?= number_format($line['kredit'], 2, ',', '.') ?></td>
                                       </tr>
                                     <?php } ?>
                                   </tbody>
@@ -166,7 +192,7 @@ if ($_SESSION['level'] !== 'admin' && $_SESSION['level'] !== 'pemilik') {
                               </div>
                             </div>
                             <div class="modal-footer">
-                              <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
                             </div>
                           </div>
                         </div>
@@ -177,9 +203,9 @@ if ($_SESSION['level'] !== 'admin' && $_SESSION['level'] !== 'pemilik') {
                       <div class="modal fade" id="editModal<?= $data['id_jurnal']; ?>" role="dialog">
                         <div class="modal-dialog modal-lg">
                           <div class="modal-content">
-                            <div class="modal-header">
+                            <div class="modal-header bg-primary text-white">
                               <h4 class="modal-title">Edit Jurnal - <?= $data['nomor_jurnal'] ?></h4>
-                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                              <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
                             </div>
                             <form role="form" action="proses-edit-jurnal.php" method="post">
                               <div class="modal-body">
@@ -195,10 +221,10 @@ if ($_SESSION['level'] !== 'admin' && $_SESSION['level'] !== 'pemilik') {
                                   <textarea name="keterangan" class="form-control" rows="3" required><?= $data['keterangan']; ?></textarea>
                                 </div>
                                 
-                                <h5>Baris Jurnal:</h5>
+                                <h5 class="mt-4">Baris Jurnal:</h5>
                                 <div class="table-responsive">
-                                  <table class="table table-sm">
-                                    <thead>
+                                  <table class="table table-sm table-striped">
+                                    <thead class="thead-light">
                                       <tr>
                                         <th>Nama Akun</th>
                                         <th>Debit</th>
@@ -232,12 +258,16 @@ if ($_SESSION['level'] !== 'admin' && $_SESSION['level'] !== 'pemilik') {
                                       <?php $line_index++; } ?>
                                     </tbody>
                                   </table>
-                                  <button type="button" class="btn btn-info btn-sm" onclick="addJournalLine(<?= $data['id_jurnal']; ?>)">Tambah Baris</button>
+                                  <button type="button" class="btn btn-info btn-sm" onclick="addJournalLine(<?= $data['id_jurnal']; ?>)">
+                                    <i class="fas fa-plus"></i> Tambah Baris
+                                  </button>
                                 </div>
                               </div>
                               <div class="modal-footer">
-                                <button type="submit" class="btn btn-success">Simpan Perubahan</button>
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                                <button type="submit" class="btn btn-success">
+                                  <i class="fas fa-save"></i> Simpan Perubahan
+                                </button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                               </div>
                             </form>
                           </div>
@@ -256,9 +286,9 @@ if ($_SESSION['level'] !== 'admin' && $_SESSION['level'] !== 'pemilik') {
         <div id="myModalTambah" class="modal fade" role="dialog">
           <div class="modal-dialog modal-lg">
             <div class="modal-content">
-              <div class="modal-header">
+              <div class="modal-header bg-primary text-white">
                 <h4 class="modal-title">Tambah Jurnal Umum Baru</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
               </div>
               <form action="tambah-jurnal.php" method="post">
                 <div class="modal-body">
@@ -272,10 +302,10 @@ if ($_SESSION['level'] !== 'admin' && $_SESSION['level'] !== 'pemilik') {
                     <textarea name="keterangan" class="form-control" rows="3" placeholder="Keterangan transaksi jurnal..." required></textarea>
                   </div>
                   
-                  <h5>Baris Jurnal:</h5>
+                  <h5 class="mt-4">Baris Jurnal:</h5>
                   <div class="table-responsive">
-                    <table class="table table-sm">
-                      <thead>
+                    <table class="table table-sm table-striped">
+                      <thead class="thead-light">
                         <tr>
                           <th>Nama Akun</th>
                           <th>Debit</th>
@@ -302,14 +332,45 @@ if ($_SESSION['level'] !== 'admin' && $_SESSION['level'] !== 'pemilik') {
                         </tr>
                       </tbody>
                     </table>
-                    <button type="button" class="btn btn-info btn-sm" onclick="addJournalLineNew()">Tambah Baris</button>
+                    <button type="button" class="btn btn-info btn-sm" onclick="addJournalLineNew()">
+                      <i class="fas fa-plus"></i> Tambah Baris
+                    </button>
                   </div>
                 </div>
                 <div class="modal-footer">
-                  <button type="submit" class="btn btn-success">Tambah Jurnal</button>
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                  <button type="submit" class="btn btn-success">
+                    <i class="fas fa-plus"></i> Tambah Jurnal
+                  </button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                 </div>
               </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bantuan Modal -->
+        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Bantuan Jurnal Umum</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p><strong>Jurnal Umum</strong> adalah buku jurnal yang digunakan untuk mencatat semua transaksi keuangan perusahaan secara kronologis.</p>
+                <p><strong>Catatan Penting:</strong></p>
+                <ul>
+                  <li>Setiap jurnal harus memiliki total debit dan kredit yang seimbang</li>
+                  <li>Gunakan akun yang sudah terdaftar dalam Chart of Accounts</li>
+                  <li>Jurnal otomatis dibuat saat melakukan transaksi pemasukan/pengeluaran/hutang</li>
+                  <li>Hanya jurnal manual yang dapat diedit atau dihapus</li>
+                </ul>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+              </div>
             </div>
           </div>
         </div>
