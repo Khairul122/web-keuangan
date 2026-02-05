@@ -69,6 +69,19 @@
           <hr class="sidebar-divider">
 
           <div class="sidebar-heading">
+              Transaksi
+          </div>
+
+          <li class="nav-item">
+              <a class="nav-link collapsed" href="jurnal-umum.php">
+                  <i class="fas fa-fw fa-book-open"></i>
+                  <span>Jurnal Umum</span>
+              </a>
+          </li>
+
+          <hr class="sidebar-divider">
+
+          <div class="sidebar-heading">
               Master Data
           </div>
 

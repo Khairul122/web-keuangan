@@ -143,6 +143,26 @@ require 'cek-sesi.php';
         <div class="alert alert-danger" role="alert">
           Akses ditolak!
         </div>
+        <?php elseif($_GET['pesan'] == "tidak_ada_baris"): ?>
+        <div class="alert alert-danger" role="alert">
+          Harus memiliki setidaknya satu baris jurnal!
+        </div>
+        <?php elseif($_GET['pesan'] == "jurnal_tidak_seimbang"): ?>
+        <div class="alert alert-danger" role="alert">
+          Total debit dan kredit harus seimbang!
+        </div>
+        <?php elseif($_GET['pesan'] == "berhasil_tambah"): ?>
+        <div class="alert alert-success" role="alert">
+          Jurnal berhasil ditambahkan!
+        </div>
+        <?php elseif($_GET['pesan'] == "berhasil_ubah"): ?>
+        <div class="alert alert-info" role="alert">
+          Jurnal berhasil diubah!
+        </div>
+        <?php elseif($_GET['pesan'] == "berhasil_hapus"): ?>
+        <div class="alert alert-warning" role="alert">
+          Jurnal berhasil dihapus!
+        </div>
         <?php endif; ?>
         <?php endif; ?>
       </div>
