@@ -74,11 +74,11 @@ if ($_SESSION['level'] !== 'admin' && $_SESSION['level'] !== 'pemilik') {
                       <th>Tanggal</th>
                       <th>Keterangan</th>
                       <th>Tipe Transaksi</th>
-                      <th>Total Debit</th>
-                      <th>Total Kredit</th>
+                      <th class="text-right">Total Debit</th>
+                      <th class="text-right">Total Kredit</th>
                       <th>Status</th>
                       <?php if ($_SESSION['level'] === 'admin'): ?>
-                      <th>Aksi</th>
+                      <th class="text-center">Aksi</th>
                       <?php endif; ?>
                     </tr>
                   </thead>
@@ -103,7 +103,7 @@ if ($_SESSION['level'] !== 'admin' && $_SESSION['level'] !== 'pemilik') {
                       <tr>
                         <td><strong><?= $data['nomor_jurnal'] ?></strong></td>
                         <td><?= date('d/m/Y', strtotime($data['tanggal'])) ?></td>
-                        <td><?= substr($data['keterangan'], 0, 50) ?><?= strlen($data['keterangan']) > 50 ? '...' : '' ?></td>
+                        <td><?= htmlspecialchars(substr($data['keterangan'], 0, 50)) ?><?= strlen($data['keterangan']) > 50 ? '...' : '' ?></td>
                         <td>
                           <?php 
                           if($data['tipe_ref_transaksi'] == 'pemasukan') echo '<span class="badge badge-info">Pemasukan</span>';
@@ -114,7 +114,7 @@ if ($_SESSION['level'] !== 'admin' && $_SESSION['level'] !== 'pemilik') {
                         </td>
                         <td class="text-right">Rp. <?= number_format($total_debit, 2, ',', '.') ?></td>
                         <td class="text-right">Rp. <?= number_format($total_kredit, 2, ',', '.') ?></td>
-                        <td><span class="badge badge-<?= $status_class ?>"><?= $status_text ?></span></td>
+                        <td class="text-center"><span class="badge badge-<?= $status_class ?>"><?= $status_text ?></span></td>
                         <?php if ($_SESSION['level'] === 'admin'): ?>
                         <td class="text-center">
                           <a href="#" type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#detailModal<?= $data['id_jurnal']; ?>" title="Lihat Detail">
@@ -144,7 +144,7 @@ if ($_SESSION['level'] !== 'admin' && $_SESSION['level'] !== 'pemilik') {
                               <div class="row mb-3">
                                 <div class="col-md-6">
                                   <p><strong>Tanggal:</strong> <?= date('d/m/Y', strtotime($data['tanggal'])) ?></p>
-                                  <p><strong>Keterangan:</strong> <?= $data['keterangan'] ?></p>
+                                  <p><strong>Keterangan:</strong> <?= htmlspecialchars($data['keterangan']) ?></p>
                                   <p><strong>Tipe Transaksi:</strong> 
                                     <?php 
                                     if($data['tipe_ref_transaksi'] == 'pemasukan') echo '<span class="badge badge-info">Pemasukan</span>';
@@ -168,7 +168,7 @@ if ($_SESSION['level'] !== 'admin' && $_SESSION['level'] !== 'pemilik') {
                               
                               <h5 class="mb-3">Baris Jurnal:</h5>
                               <div class="table-responsive">
-                                <table class="table table-sm table-striped">
+                                <table class="table table-sm table-striped table-hover">
                                   <thead class="thead-light">
                                     <tr>
                                       <th>Nama Akun</th>
@@ -182,7 +182,7 @@ if ($_SESSION['level'] !== 'admin' && $_SESSION['level'] !== 'pemilik') {
                                     while ($line = mysqli_fetch_assoc($lines_query)) {
                                     ?>
                                       <tr>
-                                        <td><?= $line['nama_akun'] ?></td>
+                                        <td><?= htmlspecialchars($line['nama_akun']) ?></td>
                                         <td class="text-right">Rp. <?= number_format($line['debit'], 2, ',', '.') ?></td>
                                         <td class="text-right">Rp. <?= number_format($line['kredit'], 2, ',', '.') ?></td>
                                       </tr>
