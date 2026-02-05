@@ -59,19 +59,23 @@ Berikut adalah beberapa tangkapan layar dari sistem:
 ![Login Page](screenshot/login-page.png)
 *Halaman autentikasi dengan desain Web 3.0*
 
-### 2. Dashboard Utama
+### 2. Dashboard Admin
 ![Dashboard](screenshot/dashboard.png)
 *Tampilan utama dengan ringkasan keuangan*
 
-### 3. Manajemen Pemasukan
+### 3. Dashboard Admin
+![Dashboard](screenshot/dashboard-admin.png)
+*Tampilan utama dengan ringkasan keuangan*
+
+### 4. Manajemen Pemasukan
 ![Income Management](screenshot/income-management.png)
 *Form untuk mencatat transaksi pemasukan*
 
-### 4. Manajemen Pengeluaran
+### 5. Manajemen Pengeluaran
 ![Expense Management](screenshot/expense-management.png)
 *Form untuk mencatat transaksi pengeluaran*
 
-### 5. Laporan Keuangan
+### 6. Laporan Keuangan
 ![Financial Reports](screenshot/financial-reports.png)
 *Preview laporan keuangan dalam format PDF*
 
