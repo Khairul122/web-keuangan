@@ -61,7 +61,7 @@ if ($_SESSION['level'] !== 'pemilik') {
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
-                      <th>ID</th>
+                      <th>No</th>
                       <th>Tanggal</th>
                       <th>Nama Penghutang</th>
                       <th>Alasan</th>
@@ -72,6 +72,7 @@ if ($_SESSION['level'] !== 'pemilik') {
                   <tbody>
                     <?php
                     $query = mysqli_query($koneksi, "SELECT * FROM hutang ORDER BY tgl_hutang DESC");
+                    $no = 1;
                     while ($data = mysqli_fetch_assoc($query)) {
                       $status_text = '';
                       $status_class = '';
@@ -95,7 +96,7 @@ if ($_SESSION['level'] !== 'pemilik') {
                       }
                     ?>
                       <tr>
-                        <td><?= $data['id_hutang'] ?></td>
+                        <td><?= $no++ ?></td>
                         <td><?= date('d/m/Y', strtotime($data['tgl_hutang'])) ?></td>
                         <td><?= $data['penghutang'] ?></td>
                         <td><?= $data['alasan'] ?></td>

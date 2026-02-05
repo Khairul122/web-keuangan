@@ -110,6 +110,7 @@ ob_start();
 
         // Inisialisasi variabel total hutang
         $total_hutang = 0;
+        $no = 1;
 
         // Periksa apakah query hutang berhasil dijalankan
         if ($result_hutang && mysqli_num_rows($result_hutang) > 0) {
@@ -137,7 +138,7 @@ ob_start();
                 }
                 
                 echo "<tr>";
-                echo "<td>" . $row['id_hutang'] . "</td>";
+                echo "<td>" . $no++ . "</td>";
                 echo "<td>" . date('d/m/Y', strtotime($row['tgl_hutang'])) . "</td>";
                 echo "<td>" . $row['penghutang'] . "</td>";
                 echo "<td>" . $row['alasan'] . "</td>";
