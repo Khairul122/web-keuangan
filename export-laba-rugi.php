@@ -8,7 +8,6 @@ session_start();
 // Get filter parameters
 $tanggal_awal = isset($_GET['tanggal_awal']) ? $_GET['tanggal_awal'] : date('Y-m-01');
 $tanggal_akhir = isset($_GET['tanggal_akhir']) ? $_GET['tanggal_akhir'] : date('Y-m-t');
-$id_user = $_SESSION['id'];
 
 // Format tanggal untuk tampilan
 $tgl_awal_fmt = date('d F Y', strtotime($tanggal_awal));
@@ -89,8 +88,7 @@ ob_start();
 
         // Query untuk menampilkan data dari tabel laba_rugi yang memiliki status 1
         $query_pendapatan = "SELECT sumber, jumlah FROM laba_rugi WHERE status = 1
-                            AND tanggal BETWEEN '$tanggal_awal' AND '$tanggal_akhir'
-                            AND id_user = '$id_user'";
+                            AND tanggal BETWEEN '$tanggal_awal' AND '$tanggal_akhir'";
 
         // Jalankan query pendapatan
         $result_pendapatan = mysqli_query($koneksi, $query_pendapatan);
@@ -122,8 +120,7 @@ ob_start();
 
         // Query untuk menampilkan data dari tabel laba_rugi yang memiliki status 2
         $query_harga_pokok = "SELECT sumber, jumlah FROM laba_rugi WHERE status = 2
-                              AND tanggal BETWEEN '$tanggal_awal' AND '$tanggal_akhir'
-                              AND id_user = '$id_user'";
+                              AND tanggal BETWEEN '$tanggal_awal' AND '$tanggal_akhir'";
 
         // Jalankan query harga pokok
         $result_harga_pokok = mysqli_query($koneksi, $query_harga_pokok);
@@ -161,8 +158,7 @@ ob_start();
 
         // Query untuk menampilkan data dari tabel laba_rugi yang memiliki status 3
         $query_biaya_operasional = "SELECT sumber, jumlah FROM laba_rugi WHERE status = 3
-                                   AND tanggal BETWEEN '$tanggal_awal' AND '$tanggal_akhir'
-                                   AND id_user = '$id_user'";
+                                   AND tanggal BETWEEN '$tanggal_awal' AND '$tanggal_akhir'";
 
         // Jalankan query biaya operasional
         $result_biaya_operasional = mysqli_query($koneksi, $query_biaya_operasional);

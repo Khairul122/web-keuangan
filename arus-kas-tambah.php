@@ -64,6 +64,18 @@ require 'cek-sesi.php';
                                 <option value="1">Operasional</option>
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label for="id_akun">Akun Terkait:</label>
+                            <select class="form-control" id="id_akun" name="id_akun">
+                                <option value="">-- Pilih Akun --</option>
+                                <?php
+                                $akun_query = mysqli_query($koneksi, "SELECT id_akun, nomor_akun, nama_akun FROM chart_of_accounts WHERE is_active = 1 ORDER BY nomor_akun");
+                                while ($akun = mysqli_fetch_assoc($akun_query)) {
+                                    echo '<option value="'.$akun['id_akun'].'">'.$akun['nomor_akun'].' - '.$akun['nama_akun'].'</option>';
+                                }
+                                ?>
+                            </select>
+                        </div>
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </form>
                 </div>

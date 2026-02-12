@@ -59,7 +59,6 @@ function buatJurnalPemasukan($id_pemasukan, $koneksi) {
     $sumber = mysqli_real_escape_string($koneksi, $data['sumber']);
     $id_akun_kas = $data['id_akun_kas'];
     $id_akun_pendapatan = $data['id_akun_pendapatan'];
-    $id_user = 1;
 
     $nomor_jurnal = generateNomorJurnal($tanggal, $koneksi);
 
@@ -67,8 +66,8 @@ function buatJurnalPemasukan($id_pemasukan, $koneksi) {
 
     try {
         $sql_jurnal = "INSERT INTO journal_entries
-                       (nomor_jurnal, tanggal, keterangan, id_ref_transaksi, tipe_ref_transaksi, id_user)
-                       VALUES ('$nomor_jurnal', '$tanggal', 'Pemasukan: $sumber', $id_pemasukan, 'pemasukan', $id_user)";
+                       (nomor_jurnal, tanggal, keterangan, id_ref_transaksi, tipe_ref_transaksi)
+                       VALUES ('$nomor_jurnal', '$tanggal', 'Pemasukan: $sumber', $id_pemasukan, 'pemasukan')";
         mysqli_query($koneksi, $sql_jurnal);
         $id_jurnal = mysqli_insert_id($koneksi);
 
@@ -150,7 +149,6 @@ function buatJurnalPengeluaran($id_pengeluaran, $koneksi) {
     $sumber = mysqli_real_escape_string($koneksi, $data['sumber']);
     $id_akun_beban = $data['id_akun_beban'];
     $id_akun_kas = $data['id_akun_kas'];
-    $id_user = 1;
 
     $nomor_jurnal = generateNomorJurnal($tanggal, $koneksi);
 
@@ -158,8 +156,8 @@ function buatJurnalPengeluaran($id_pengeluaran, $koneksi) {
 
     try {
         $sql_jurnal = "INSERT INTO journal_entries
-                       (nomor_jurnal, tanggal, keterangan, id_ref_transaksi, tipe_ref_transaksi, id_user)
-                       VALUES ('$nomor_jurnal', '$tanggal', 'Pengeluaran: $sumber', $id_pengeluaran, 'pengeluaran', $id_user)";
+                       (nomor_jurnal, tanggal, keterangan, id_ref_transaksi, tipe_ref_transaksi)
+                       VALUES ('$nomor_jurnal', '$tanggal', 'Pengeluaran: $sumber', $id_pengeluaran, 'pengeluaran')";
         mysqli_query($koneksi, $sql_jurnal);
         $id_jurnal = mysqli_insert_id($koneksi);
 
@@ -269,7 +267,6 @@ function buatJurnalHutang($id_hutang, $koneksi) {
     $tanggal = $data['tgl_hutang'];
     $jumlah = floatval($data['jumlah']);
     $alasan = mysqli_real_escape_string($koneksi, $data['alasan']);
-    $id_user = $data['id_user'] ?? 1;
 
     $nomor_jurnal = generateNomorJurnal($tanggal, $koneksi);
 
@@ -277,8 +274,8 @@ function buatJurnalHutang($id_hutang, $koneksi) {
 
     try {
         $sql_jurnal = "INSERT INTO journal_entries
-                       (nomor_jurnal, tanggal, keterangan, id_ref_transaksi, tipe_ref_transaksi, id_user)
-                       VALUES ('$nomor_jurnal', '$tanggal', 'Hutang: $alasan', $id_hutang, 'hutang', $id_user)";
+                       (nomor_jurnal, tanggal, keterangan, id_ref_transaksi, tipe_ref_transaksi)
+                       VALUES ('$nomor_jurnal', '$tanggal', 'Hutang: $alasan', $id_hutang, 'hutang')";
         mysqli_query($koneksi, $sql_jurnal);
         $id_jurnal = mysqli_insert_id($koneksi);
 

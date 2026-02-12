@@ -110,6 +110,7 @@ WHERE tgl_pengeluaran = CURDATE() - INTERVAL 7 DAY");
                                             <th>Sumber</th>
                                             <th>Jumlah</th>
                                             <th>Kategori</th>
+                                            <th>Akun Terkait</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -117,8 +118,8 @@ WHERE tgl_pengeluaran = CURDATE() - INTERVAL 7 DAY");
                                         // Sisipkan file koneksi.php yang berisi koneksi ke database
                                         include('koneksi.php');
 
-                                        // Query untuk menampilkan data dari tabel laba_rugi
-                                        $query = "SELECT * FROM laba_rugi WHERE id_user = 1"; // Mengambil data dengan id_user = 1, sesuaikan dengan kebutuhan
+                                        // Query untuk menampilkan data dari tabel laba_rugi dengan join ke chart_of_accounts
+                                        $query = "SELECT lr.*, coa.nama_akun FROM laba_rugi lr LEFT JOIN chart_of_accounts coa ON lr.id_akun = coa.id_akun";
 
                                         // Jalankan query
                                         $result = mysqli_query($koneksi, $query);
@@ -152,6 +153,7 @@ WHERE tgl_pengeluaran = CURDATE() - INTERVAL 7 DAY");
                                                         break;
                                                 }
                                                 echo "</td>";
+                                                echo "<td>" . ($row['nama_akun'] ?? 'Tidak terkait') . "</td>";
                                                 echo "</tr>";
                                             }
                                         } else {

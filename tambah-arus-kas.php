@@ -7,12 +7,14 @@ $tanggal = $_POST['tanggal'];
 $sumber = $_POST['sumber'];
 $jumlah = $_POST['jumlah'];
 $status = $_POST['status'];
-
-// Tetapkan id_user (misalnya, di sini saya tetapkan sebagai 1)
-$id_user = 1;
+$id_akun = $_POST['id_akun'] ?? NULL; // Ambil id_akun dari formulir, jika tidak ada set NULL
 
 // Siapkan pernyataan SQL INSERT
-$sql = "INSERT INTO arus_kas (tanggal, sumber, jumlah, status, id_user) VALUES ('$tanggal', '$sumber', '$jumlah', '$status', '$id_user')";
+if ($id_akun) {
+    $sql = "INSERT INTO arus_kas (tanggal, sumber, jumlah, status, id_akun) VALUES ('$tanggal', '$sumber', '$jumlah', '$status', '$id_akun')";
+} else {
+    $sql = "INSERT INTO arus_kas (tanggal, sumber, jumlah, status) VALUES ('$tanggal', '$sumber', '$jumlah', '$status')";
+}
 
 // Lakukan pengecekan apakah data berhasil dimasukkan ke dalam database atau tidak
 if ($koneksi->query($sql) === TRUE) {

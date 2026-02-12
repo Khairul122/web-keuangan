@@ -111,6 +111,7 @@ WHERE tgl_pengeluaran = CURDATE() - INTERVAL 7 DAY");
                                             <th>Pergerakan Kredit</th>
                                             <th>Pergerakan Debit</th>
                                             <th>Kategori</th>
+                                            <th>Akun Terkait</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -118,8 +119,8 @@ WHERE tgl_pengeluaran = CURDATE() - INTERVAL 7 DAY");
                                         // Sisipkan file koneksi.php yang berisi koneksi ke database
                                         include('koneksi.php');
 
-                                        // Query untuk mengambil data dari tabel neraca_saldo
-                                        $sql = "SELECT * FROM neraca_saldo";
+                                        // Query untuk mengambil data dari tabel neraca_saldo dengan join ke chart_of_accounts
+                                        $sql = "SELECT ns.*, coa.nama_akun as akun_nama FROM neraca_saldo ns LEFT JOIN chart_of_accounts coa ON ns.id_akun = coa.id_akun";
                                         $result = $koneksi->query($sql);
 
                                         if ($result->num_rows > 0) {
@@ -156,6 +157,7 @@ WHERE tgl_pengeluaran = CURDATE() - INTERVAL 7 DAY");
                                                         $kategori = "Tidak Diketahui";
                                                 }
                                                 echo "<td>" . $kategori . "</td>";
+                                                echo "<td>" . ($row["akun_nama"] ?? 'Tidak terkait') . "</td>";
                                                 echo "</tr>";
                                                 $no++;
                                             }

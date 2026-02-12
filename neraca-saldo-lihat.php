@@ -96,11 +96,9 @@ require 'cek-sesi.php';
                             // Filter tanggal
                             $tanggal_awal = isset($_GET['tanggal_awal']) ? $_GET['tanggal_awal'] : date('Y-m-01');
                             $tanggal_akhir = isset($_GET['tanggal_akhir']) ? $_GET['tanggal_akhir'] : date('Y-m-t');
-                            $id_user = $_SESSION['id'];
 
                             $sql = "SELECT * FROM neraca_saldo WHERE status = 1
                                     AND tanggal BETWEEN '$tanggal_awal' AND '$tanggal_akhir'
-                                    AND id_user = '$id_user'
                                     ORDER BY nomor_akun ASC";
                             $result = $koneksi->query($sql);
 
@@ -132,7 +130,6 @@ require 'cek-sesi.php';
                             include('koneksi.php');
                             $sql = "SELECT * FROM neraca_saldo WHERE status = 2
                                     AND tanggal BETWEEN '$tanggal_awal' AND '$tanggal_akhir'
-                                    AND id_user = '$id_user'
                                     ORDER BY nomor_akun ASC";
                             $result = $koneksi->query($sql);
 
@@ -163,7 +160,6 @@ require 'cek-sesi.php';
                             include('koneksi.php');
                             $sql = "SELECT * FROM neraca_saldo WHERE status = 3
                                     AND tanggal BETWEEN '$tanggal_awal' AND '$tanggal_akhir'
-                                    AND id_user = '$id_user'
                                     ORDER BY nomor_akun ASC";
                             $result = $koneksi->query($sql);
 
@@ -194,7 +190,6 @@ require 'cek-sesi.php';
                             include('koneksi.php');
                             $sql = "SELECT * FROM neraca_saldo WHERE status = 4
                                     AND tanggal BETWEEN '$tanggal_awal' AND '$tanggal_akhir'
-                                    AND id_user = '$id_user'
                                     ORDER BY nomor_akun ASC";
                             $result = $koneksi->query($sql);
 
@@ -225,7 +220,6 @@ require 'cek-sesi.php';
                             include('koneksi.php');
                             $sql = "SELECT * FROM neraca_saldo WHERE status = 5
                                     AND tanggal BETWEEN '$tanggal_awal' AND '$tanggal_akhir'
-                                    AND id_user = '$id_user'
                                     ORDER BY nomor_akun ASC";
                             $result = $koneksi->query($sql);
 
@@ -254,40 +248,34 @@ require 'cek-sesi.php';
                                 <?php
                                 include('koneksi.php');
 
-                                // Query untuk menghitung total dengan filter tanggal dan user
+                                // Query untuk menghitung total dengan filter tanggal
                                 $sql_total_debit = "SELECT SUM(saldo_awal_debit) AS total_debit FROM neraca_saldo
-                                                   WHERE tanggal BETWEEN '$tanggal_awal' AND '$tanggal_akhir'
-                                                   AND id_user = '$id_user'";
+                                                   WHERE tanggal BETWEEN '$tanggal_awal' AND '$tanggal_akhir'";
                                 $result_total_debit = $koneksi->query($sql_total_debit);
                                 $total_debit = $result_total_debit ? $result_total_debit->fetch_assoc()['total_debit'] : 0;
 
                                 $sql_total_kredit = "SELECT SUM(saldo_awal_kredit) AS total_kredit FROM neraca_saldo
-                                                    WHERE tanggal BETWEEN '$tanggal_awal' AND '$tanggal_akhir'
-                                                    AND id_user = '$id_user'";
+                                                    WHERE tanggal BETWEEN '$tanggal_awal' AND '$tanggal_akhir'";
                                 $result_total_kredit = $koneksi->query($sql_total_kredit);
                                 $total_kredit = $result_total_kredit ? $result_total_kredit->fetch_assoc()['total_kredit'] : 0;
 
                                 $sql_total_pergerakan_debit = "SELECT SUM(pergerakan_debit) AS total_pergerakan_debit FROM neraca_saldo
-                                                                WHERE tanggal BETWEEN '$tanggal_awal' AND '$tanggal_akhir'
-                                                                AND id_user = '$id_user'";
+                                                                WHERE tanggal BETWEEN '$tanggal_awal' AND '$tanggal_akhir'";
                                 $result_total_pergerakan_debit = $koneksi->query($sql_total_pergerakan_debit);
                                 $total_pergerakan_debit = $result_total_pergerakan_debit ? $result_total_pergerakan_debit->fetch_assoc()['total_pergerakan_debit'] : 0;
 
                                 $sql_total_pergerakan_kredit = "SELECT SUM(pergerakan_kredit) AS total_pergerakan_kredit FROM neraca_saldo
-                                                                WHERE tanggal BETWEEN '$tanggal_awal' AND '$tanggal_akhir'
-                                                                AND id_user = '$id_user'";
+                                                                WHERE tanggal BETWEEN '$tanggal_awal' AND '$tanggal_akhir'";
                                 $result_total_pergerakan_kredit = $koneksi->query($sql_total_pergerakan_kredit);
                                 $total_pergerakan_kredit = $result_total_pergerakan_kredit ? $result_total_pergerakan_kredit->fetch_assoc()['total_pergerakan_kredit'] : 0;
 
                                 $sql_total_saldo_akhir_debit = "SELECT SUM(saldo_awal_debit + pergerakan_debit) AS total_saldo_akhir_debit FROM neraca_saldo
-                                                                WHERE tanggal BETWEEN '$tanggal_awal' AND '$tanggal_akhir'
-                                                                AND id_user = '$id_user'";
+                                                                WHERE tanggal BETWEEN '$tanggal_awal' AND '$tanggal_akhir'";
                                 $result_total_saldo_akhir_debit = $koneksi->query($sql_total_saldo_akhir_debit);
                                 $total_saldo_akhir_debit = $result_total_saldo_akhir_debit ? $result_total_saldo_akhir_debit->fetch_assoc()['total_saldo_akhir_debit'] : 0;
 
                                 $sql_total_saldo_akhir_kredit = "SELECT SUM(saldo_awal_kredit + pergerakan_kredit) AS total_saldo_akhir_kredit FROM neraca_saldo
-                                                                WHERE tanggal BETWEEN '$tanggal_awal' AND '$tanggal_akhir'
-                                                                AND id_user = '$id_user'";
+                                                                WHERE tanggal BETWEEN '$tanggal_awal' AND '$tanggal_akhir'";
                                 $result_total_saldo_akhir_kredit = $koneksi->query($sql_total_saldo_akhir_kredit);
                                 $total_saldo_akhir_kredit = $result_total_saldo_akhir_kredit ? $result_total_saldo_akhir_kredit->fetch_assoc()['total_saldo_akhir_kredit'] : 0;
 

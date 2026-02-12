@@ -18,7 +18,6 @@ require_once 'includes/functions-jurnal.php';
 
     $tanggal_awal = isset($_GET['tanggal_awal']) ? $_GET['tanggal_awal'] : date('Y-m-01');
     $tanggal_akhir = isset($_GET['tanggal_akhir']) ? $_GET['tanggal_akhir'] : date('Y-m-t');
-    $id_user = $_SESSION['id'];
 
     $sql_pendapatan = "SELECT
                         ca.id_akun, ca.nomor_akun, ca.nama_akun,
@@ -27,7 +26,6 @@ require_once 'includes/functions-jurnal.php';
                        LEFT JOIN journal_lines jl ON ca.id_akun = jl.id_akun
                        LEFT JOIN journal_entries je ON jl.id_jurnal = je.id_jurnal
                            AND je.tanggal BETWEEN '$tanggal_awal' AND '$tanggal_akhir'
-                           AND je.id_user = '$id_user'
                        WHERE ca.jenis_akun = 'Pendapatan'
                        GROUP BY ca.id_akun
                        HAVING jumlah != 0";
@@ -40,7 +38,6 @@ require_once 'includes/functions-jurnal.php';
                 LEFT JOIN journal_lines jl ON ca.id_akun = jl.id_akun
                 LEFT JOIN journal_entries je ON jl.id_jurnal = je.id_jurnal
                     AND je.tanggal BETWEEN '$tanggal_awal' AND '$tanggal_akhir'
-                    AND je.id_user = '$id_user'
                 WHERE ca.jenis_akun = 'Beban' AND (ca.nama_akun LIKE '%Harga Pokok%' OR ca.nomor_akun LIKE '5-100%')
                 GROUP BY ca.id_akun
                 HAVING jumlah != 0";
@@ -53,7 +50,6 @@ require_once 'includes/functions-jurnal.php';
                   LEFT JOIN journal_lines jl ON ca.id_akun = jl.id_akun
                   LEFT JOIN journal_entries je ON jl.id_jurnal = je.id_jurnal
                       AND je.tanggal BETWEEN '$tanggal_awal' AND '$tanggal_akhir'
-                      AND je.id_user = '$id_user'
                   WHERE ca.jenis_akun = 'Beban' AND ca.nama_akun NOT LIKE '%Harga Pokok%'
                   GROUP BY ca.id_akun
                   HAVING jumlah != 0";

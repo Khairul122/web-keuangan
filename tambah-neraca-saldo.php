@@ -10,11 +10,16 @@ $pergerakan_debit = $_POST['pergerakan_debit'];
 $pergerakan_kredit = $_POST['pergerakan_kredit'];
 $status = $_POST['status'];
 $tanggal = $_POST['tanggal'];
-$id_user = 1; // Set id_user menjadi 1
+$id_akun = $_POST['id_akun'] ?? NULL; // Ambil id_akun dari formulir, jika tidak ada set NULL
 
 // Buat query SQL untuk menyimpan data ke dalam database
-$sql = "INSERT INTO neraca_saldo (nama_akun, saldo_awal_debit, saldo_awal_kredit, pergerakan_debit, pergerakan_kredit, status, tanggal, id_user)
-        VALUES ('$nama_akun', '$saldo_awal_debit', '$saldo_awal_kredit', '$pergerakan_debit', '$pergerakan_kredit', '$status', '$tanggal', '$id_user')";
+if ($id_akun) {
+    $sql = "INSERT INTO neraca_saldo (nama_akun, saldo_awal_debit, saldo_awal_kredit, pergerakan_debit, pergerakan_kredit, status, tanggal, id_akun)
+            VALUES ('$nama_akun', '$saldo_awal_debit', '$saldo_awal_kredit', '$pergerakan_debit', '$pergerakan_kredit', '$status', '$tanggal', '$id_akun')";
+} else {
+    $sql = "INSERT INTO neraca_saldo (nama_akun, saldo_awal_debit, saldo_awal_kredit, pergerakan_debit, pergerakan_kredit, status, tanggal)
+            VALUES ('$nama_akun', '$saldo_awal_debit', '$saldo_awal_kredit', '$pergerakan_debit', '$pergerakan_kredit', '$status', '$tanggal')";
+}
 
 // Jalankan query
 if ($koneksi->query($sql) === TRUE) {

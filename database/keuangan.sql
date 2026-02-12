@@ -57,34 +57,34 @@ CREATE TABLE `arus_kas` (
   `jumlah` int(30) DEFAULT NULL,
   `kas_awal` bigint(20) DEFAULT 0,
   `status` int(5) DEFAULT NULL,
-  `id_user` int(5) DEFAULT NULL
+  `id_akun` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `arus_kas`
 --
 
-INSERT INTO `arus_kas` (`id_arus_kas`, `tanggal`, `sumber`, `jumlah`, `kas_awal`, `status`, `id_user`) VALUES
-(28, '2026-01-01', 'Penerimaan dari Penjualan Pupuk', 2390091, 52390091, 1, 1),
-(29, '2026-01-02', 'Penerimaan dari Penjualan Benih', 2242657, 50147434, 2, 1),
-(30, '2026-01-03', 'Penerimaan dari Jasa Pengolahan Lahan', 1054259, 51201693, 1, 1),
-(31, '2026-01-04', 'Pembayaran Gaji Karyawan', 1972601, 49229092, 2, 1),
-(32, '2026-01-05', 'Pembayaran Biaya Operasional', 1626699, 50855791, 1, 1),
-(33, '2026-01-06', 'Penerimaan dari Jasa Konsultasi', 2474755, 48381036, 2, 1),
-(34, '2026-01-07', 'Pembayaran Pembelian Stok Barang', 2319259, 50700295, 1, 1),
-(35, '2026-01-08', 'Penerimaan dari Jasa Pengendalian Hama', 2072044, 48628251, 2, 1),
-(36, '2026-01-09', 'Pembayaran Biaya Transportasi', 1806492, 50434743, 1, 1),
-(37, '2026-01-10', 'Penerimaan dari Penjualan Alat', 813294, 49621449, 2, 1),
-(38, '2026-01-11', 'Pembayaran Biaya Sewa Gudang', 1452083, 51073532, 1, 1),
-(39, '2026-01-12', 'Penerimaan dari Jasa Penyemaian', 1107598, 49965934, 2, 1),
-(40, '2026-01-13', 'Pembayaran Biaya Perawatan', 1034892, 51000826, 1, 1),
-(41, '2026-01-14', 'Penerimaan dari Penjualan Perlengkapan', 1890451, 49110375, 2, 1),
-(42, '2026-01-15', 'Pembayaran Biaya Promosi', 1074647, 50185022, 1, 1),
-(43, '2026-01-16', 'Penerimaan dari Jasa Analisis Tanah', 2203793, 47981229, 2, 1),
-(44, '2026-01-17', 'Pembayaran Biaya Pajak', 808432, 48789661, 1, 1),
-(45, '2026-01-18', 'Penerimaan dari Jasa Pemeliharaan', 1772610, 47017051, 2, 1),
-(46, '2026-01-19', 'Pembayaran Biaya Asuransi', 1129280, 48146331, 1, 1),
-(47, '2026-01-20', 'Penerimaan dari Jasa Pengeringan', 1323711, 46822620, 2, 1);
+INSERT INTO `arus_kas` (`id_arus_kas`, `tanggal`, `sumber`, `jumlah`, `kas_awal`, `status`, `id_akun`) VALUES
+(28, '2026-01-01', 'Penerimaan dari Penjualan Pupuk', 2390091, 52390091, 1, 78),
+(29, '2026-01-02', 'Penerimaan dari Penjualan Benih', 2242657, 50147434, 2, 78),
+(30, '2026-01-03', 'Penerimaan dari Jasa Pengolahan Lahan', 1054259, 51201693, 1, 78),
+(31, '2026-01-04', 'Pembayaran Gaji Karyawan', 1972601, 49229092, 2, 78),
+(32, '2026-01-05', 'Pembayaran Biaya Operasional', 1626699, 50855791, 1, 78),
+(33, '2026-01-06', 'Penerimaan dari Jasa Konsultasi', 2474755, 48381036, 2, 78),
+(34, '2026-01-07', 'Pembayaran Pembelian Stok Barang', 2319259, 50700295, 1, 78),
+(35, '2026-01-08', 'Penerimaan dari Jasa Pengendalian Hama', 2072044, 48628251, 2, 78),
+(36, '2026-01-09', 'Pembayaran Biaya Transportasi', 1806492, 50434743, 1, 78),
+(37, '2026-01-10', 'Penerimaan dari Penjualan Alat', 813294, 49621449, 2, 78),
+(38, '2026-01-11', 'Pembayaran Biaya Sewa Gudang', 1452083, 51073532, 1, 78),
+(39, '2026-01-12', 'Penerimaan dari Jasa Penyemaian', 1107598, 49965934, 2, 78),
+(40, '2026-01-13', 'Pembayaran Biaya Perawatan', 1034892, 51000826, 1, 78),
+(41, '2026-01-14', 'Penerimaan dari Penjualan Perlengkapan', 1890451, 49110375, 2, 78),
+(42, '2026-01-15', 'Pembayaran Biaya Promosi', 1074647, 50185022, 1, 78),
+(43, '2026-01-16', 'Penerimaan dari Jasa Analisis Tanah', 2203793, 47981229, 2, 78),
+(44, '2026-01-17', 'Pembayaran Biaya Pajak', 808432, 48789661, 1, 78),
+(45, '2026-01-18', 'Penerimaan dari Jasa Pemeliharaan', 1772610, 47017051, 2, 78),
+(46, '2026-01-19', 'Pembayaran Biaya Asuransi', 1129280, 48146331, 1, 78),
+(47, '2026-01-20', 'Penerimaan dari Jasa Pengeringan', 1323711, 46822620, 2, 78);
 
 -- --------------------------------------------------------
 
@@ -132,34 +132,35 @@ CREATE TABLE `hutang` (
   `alasan` text NOT NULL,
   `penghutang` varchar(100) NOT NULL,
   `status` int(11) DEFAULT 1,
-  `id_user` int(11) DEFAULT 1
+  `id_akun_debet` int(11) DEFAULT NULL,
+  `id_akun_kredit` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `hutang`
 --
 
-INSERT INTO `hutang` (`id_hutang`, `jumlah`, `tgl_hutang`, `alasan`, `penghutang`, `status`, `id_user`) VALUES
-(11, 9300167, '2026-01-01', 'Pinjaman Modal Kerja dari Bank', 'Bank Mandiri', 1, 1),
-(12, 7558363, '2026-01-02', 'Utang Pembelian Pupuk', 'PT. Tani Sejahtera', 1, 1),
-(13, 2522799, '2026-01-03', 'Utang Pembelian Benih', 'CV. Mitra Agroindo', 1, 1),
-(14, 8829164, '2026-01-04', 'Utang Pembelian Alat Pertanian', 'PT. Alat Tani Jaya', 1, 1),
-(15, 8070601, '2026-01-05', 'Utang Jasa Pengolahan Lahan', 'CV. Jasa Pengolahan Lahan', 1, 1),
-(16, 5434728, '2026-01-06', 'Utang Pembelian Perlengkapan', 'PT. Perlengkapan Tani', 1, 1),
-(17, 6301014, '2026-01-07', 'Utang Biaya Renovasi Gudang', 'Kontraktor Bangunan', 1, 1),
-(18, 7250798, '2026-01-08', 'Utang Pembelian Kendaraan Operasional', 'Dealer Kendaraan', 1, 1),
-(19, 6401093, '2026-01-09', 'Utang Pembelian Peralatan Irigasi', 'CV. Sistem Irigasi', 1, 1),
-(20, 8120150, '2026-01-10', 'Utang Biaya Pemasaran', 'PT. Digital Marketing', 1, 1),
-(21, 8489231, '2026-01-11', 'Utang Pembelian Perlengkapan Ternak', 'CV. Peternakan Sehat', 1, 1),
-(22, 7180979, '2026-01-12', 'Utang Biaya Konstruksi Fasilitas', 'PT. Konstruksi Hijau', 1, 1),
-(23, 8771666, '2026-01-13', 'Utang Pembelian Media Tanam', 'CV. Media Tanam Organik', 1, 1),
-(24, 9335180, '2026-01-14', 'Utang Biaya Konsultan', 'Konsultan Bisnis', 1, 1),
-(25, 5515706, '2026-01-15', 'Utang Pembelian Peralatan Hidroponik', 'PT. Teknologi Hidroponik', 1, 1),
-(26, 3901951, '2026-01-16', 'Utang Biaya Lisensi Perangkat Lunak', 'Perusahaan Software', 1, 1),
-(27, 9195464, '2026-01-17', 'Utang Pembelian Peralatan Laboratorium', 'CV. Laboratorium Tanah', 1, 1),
-(28, 6909957, '2026-01-18', 'Utang Biaya Sertifikasi Produk', 'Lembaga Sertifikasi', 1, 1),
-(29, 5389035, '2026-01-19', 'Utang Pembelian Sistem Pengolahan Air', 'PT. Teknik Pengolahan Air', 1, 1),
-(30, 9312388, '2026-01-20', 'Utang Biaya Pengembangan Website', 'Web Developer Freelance', 1, 1);
+INSERT INTO `hutang` (`id_hutang`, `jumlah`, `tgl_hutang`, `alasan`, `penghutang`, `status`, `id_akun_debet`, `id_akun_kredit`) VALUES
+(11, 9300167, '2026-01-01', 'Pinjaman Modal Kerja dari Bank', 'Bank Mandiri', 1, 82, 78),
+(12, 7558363, '2026-01-02', 'Utang Pembelian Pupuk', 'PT. Tani Sejahtera', 1, 82, 81),
+(13, 2522799, '2026-01-03', 'Utang Pembelian Benih', 'CV. Mitra Agroindo', 1, 82, 81),
+(14, 8829164, '2026-01-04', 'Utang Pembelian Alat Pertanian', 'PT. Alat Tani Jaya', 1, 82, 78),
+(15, 8070601, '2026-01-05', 'Utang Jasa Pengolahan Lahan', 'CV. Jasa Pengolahan Lahan', 1, 82, 81),
+(16, 5434728, '2026-01-06', 'Utang Pembelian Perlengkapan', 'PT. Perlengkapan Tani', 1, 82, 81),
+(17, 6301014, '2026-01-07', 'Utang Biaya Renovasi Gudang', 'Kontraktor Bangunan', 1, 82, 78),
+(18, 7250798, '2026-01-08', 'Utang Pembelian Kendaraan Operasional', 'Dealer Kendaraan', 1, 82, 78),
+(19, 6401093, '2026-01-09', 'Utang Pembelian Peralatan Irigasi', 'CV. Sistem Irigasi', 1, 82, 78),
+(20, 8120150, '2026-01-10', 'Utang Biaya Pemasaran', 'PT. Digital Marketing', 1, 82, 78),
+(21, 8489231, '2026-01-11', 'Utang Pembelian Perlengkapan Ternak', 'CV. Peternakan Sehat', 1, 82, 78),
+(22, 7180979, '2026-01-12', 'Utang Biaya Konstruksi Fasilitas', 'PT. Konstruksi Hijau', 1, 82, 78),
+(23, 8771666, '2026-01-13', 'Utang Pembelian Media Tanam', 'CV. Media Tanam Organik', 1, 82, 78),
+(24, 9335180, '2026-01-14', 'Utang Biaya Konsultan', 'Konsultan Bisnis', 1, 82, 78),
+(25, 5515706, '2026-01-15', 'Utang Pembelian Peralatan Hidroponik', 'PT. Teknologi Hidroponik', 1, 82, 78),
+(26, 3901951, '2026-01-16', 'Utang Biaya Lisensi Perangkat Lunak', 'Perusahaan Software', 1, 82, 78),
+(27, 9195464, '2026-01-17', 'Utang Pembelian Peralatan Laboratorium', 'CV. Laboratorium Tanah', 1, 82, 78),
+(28, 6909957, '2026-01-18', 'Utang Biaya Sertifikasi Produk', 'Lembaga Sertifikasi', 1, 82, 78),
+(29, 5389035, '2026-01-19', 'Utang Pembelian Sistem Pengolahan Air', 'PT. Teknik Pengolahan Air', 1, 82, 78),
+(30, 9312388, '2026-01-20', 'Utang Biaya Pengembangan Website', 'Web Developer Freelance', 1, 82, 78);
 
 -- --------------------------------------------------------
 
@@ -174,7 +175,6 @@ CREATE TABLE `journal_entries` (
   `keterangan` text DEFAULT NULL,
   `id_ref_transaksi` int(11) DEFAULT NULL,
   `tipe_ref_transaksi` enum('pemasukan','pengeluaran','manual','hutang') DEFAULT 'manual',
-  `id_user` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -183,47 +183,47 @@ CREATE TABLE `journal_entries` (
 -- Dumping data for table `journal_entries`
 --
 
-INSERT INTO `journal_entries` (`id_jurnal`, `nomor_jurnal`, `tanggal`, `keterangan`, `id_ref_transaksi`, `tipe_ref_transaksi`, `id_user`, `created_at`, `updated_at`) VALUES
-(142, 'JV-20260101-0001', '2026-01-01', 'Pemasukan: Penjualan Pupuk Organik Premium', 44, 'pemasukan', 1, '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
-(143, 'JV-20260102-0001', '2026-01-02', 'Pemasukan: Penjualan Benih Padi Unggul', 45, 'pemasukan', 1, '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
-(144, 'JV-20260103-0001', '2026-01-03', 'Pemasukan: Penjualan Alat Pertanian Modern', 46, 'pemasukan', 1, '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
-(145, 'JV-20260104-0001', '2026-01-04', 'Pemasukan: Jasa Pengolahan Lahan', 47, 'pemasukan', 1, '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
-(146, 'JV-20260105-0001', '2026-01-05', 'Pemasukan: Jasa Konsultasi Pertanian', 48, 'pemasukan', 1, '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
-(147, 'JV-20260106-0001', '2026-01-06', 'Pemasukan: Penjualan Peralatan Irigasi', 49, 'pemasukan', 1, '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
-(148, 'JV-20260107-0001', '2026-01-07', 'Pemasukan: Penjualan Bibit Sayuran', 50, 'pemasukan', 1, '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
-(149, 'JV-20260108-0001', '2026-01-08', 'Pemasukan: Jasa Pemupukan Lahan', 51, 'pemasukan', 1, '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
-(150, 'JV-20260109-0001', '2026-01-09', 'Pemasukan: Penjualan Pupuk Cair Nutrisi', 52, 'pemasukan', 1, '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
-(151, 'JV-20260110-0001', '2026-01-10', 'Pemasukan: Jasa Pengendalian Hama', 53, 'pemasukan', 1, '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
-(152, 'JV-20260111-0001', '2026-01-11', 'Pemasukan: Penjualan Alat Panen Modern', 54, 'pemasukan', 1, '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
-(153, 'JV-20260112-0001', '2026-01-12', 'Pemasukan: Jasa Penyemaian Benih', 55, 'pemasukan', 1, '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
-(154, 'JV-20260113-0001', '2026-01-13', 'Pemasukan: Penjualan Perlengkapan Ternak', 56, 'pemasukan', 1, '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
-(155, 'JV-20260114-0001', '2026-01-14', 'Pemasukan: Jasa Pengeringan Hasil Panen', 57, 'pemasukan', 1, '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
-(156, 'JV-20260115-0001', '2026-01-15', 'Pemasukan: Penjualan Peralatan Pengolahan', 58, 'pemasukan', 1, '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
-(157, 'JV-20260116-0001', '2026-01-16', 'Pemasukan: Jasa Desinfeksi Lahan', 59, 'pemasukan', 1, '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
-(158, 'JV-20260117-0001', '2026-01-17', 'Pemasukan: Penjualan Media Tanam', 60, 'pemasukan', 1, '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
-(159, 'JV-20260118-0001', '2026-01-18', 'Pemasukan: Jasa Pemeliharaan Tanaman', 61, 'pemasukan', 1, '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
-(160, 'JV-20260119-0001', '2026-01-19', 'Pemasukan: Penjualan Peralatan Hidroponik', 62, 'pemasukan', 1, '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
-(161, 'JV-20260120-0001', '2026-01-20', 'Pemasukan: Jasa Analisis Tanah', 63, 'pemasukan', 1, '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
-(162, 'JV-20260101-0002', '2026-01-01', 'Pengeluaran: Gaji Karyawan Bulan Januari', 48, 'pengeluaran', 1, '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
-(163, 'JV-20260102-0002', '2026-01-02', 'Pengeluaran: Biaya Listrik Kantor', 49, 'pengeluaran', 1, '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
-(164, 'JV-20260103-0002', '2026-01-03', 'Pengeluaran: Biaya Air Bersih', 50, 'pengeluaran', 1, '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
-(165, 'JV-20260104-0002', '2026-01-04', 'Pengeluaran: Pembelian Pupuk untuk Stok', 51, 'pengeluaran', 1, '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
-(166, 'JV-20260105-0002', '2026-01-05', 'Pengeluaran: Pembelian Benih untuk Stok', 52, 'pengeluaran', 1, '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
-(167, 'JV-20260106-0002', '2026-01-06', 'Pengeluaran: Biaya Transportasi Operasional', 53, 'pengeluaran', 1, '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
-(168, 'JV-20260107-0002', '2026-01-07', 'Pengeluaran: Biaya Bensin Kendaraan', 54, 'pengeluaran', 1, '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
-(169, 'JV-20260108-0002', '2026-01-08', 'Pengeluaran: Biaya Perawatan Alat', 55, 'pengeluaran', 1, '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
-(170, 'JV-20260109-0002', '2026-01-09', 'Pengeluaran: Biaya Sewa Gudang', 56, 'pengeluaran', 1, '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
-(171, 'JV-20260110-0002', '2026-01-10', 'Pengeluaran: Biaya Promosi dan Iklan', 57, 'pengeluaran', 1, '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
-(172, 'JV-20260111-0002', '2026-01-11', 'Pengeluaran: Biaya ATK Kantor', 58, 'pengeluaran', 1, '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
-(173, 'JV-20260112-0002', '2026-01-12', 'Pengeluaran: Biaya Internet dan Telepon', 59, 'pengeluaran', 1, '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
-(174, 'JV-20260113-0002', '2026-01-13', 'Pengeluaran: Biaya Pajak Bulanan', 60, 'pengeluaran', 1, '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
-(175, 'JV-20260114-0002', '2026-01-14', 'Pengeluaran: Biaya Asuransi Karyawan', 61, 'pengeluaran', 1, '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
-(176, 'JV-20260115-0002', '2026-01-15', 'Pengeluaran: Biaya Pelatihan Karyawan', 62, 'pengeluaran', 1, '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
-(177, 'JV-20260116-0002', '2026-01-16', 'Pengeluaran: Biaya Perlengkapan Kebersihan', 63, 'pengeluaran', 1, '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
-(178, 'JV-20260117-0002', '2026-01-17', 'Pengeluaran: Biaya Perbaikan Kendaraan', 64, 'pengeluaran', 1, '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
-(179, 'JV-20260118-0002', '2026-01-18', 'Pengeluaran: Biaya Pengiriman Barang', 65, 'pengeluaran', 1, '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
-(180, 'JV-20260119-0002', '2026-01-19', 'Pengeluaran: Biaya Maintenance Website', 66, 'pengeluaran', 1, '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
-(181, 'JV-20260120-0002', '2026-01-20', 'Pengeluaran: Biaya Sewa Lahan Percobaan', 67, 'pengeluaran', 1, '2026-02-05 05:12:51', '2026-02-05 05:12:51');
+INSERT INTO `journal_entries` (`id_jurnal`, `nomor_jurnal`, `tanggal`, `keterangan`, `id_ref_transaksi`, `tipe_ref_transaksi`, `created_at`, `updated_at`) VALUES
+(142, 'JV-20260101-0001', '2026-01-01', 'Pemasukan: Penjualan Pupuk Organik Premium', 44, 'pemasukan', '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
+(143, 'JV-20260102-0001', '2026-01-02', 'Pemasukan: Penjualan Benih Padi Unggul', 45, 'pemasukan', '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
+(144, 'JV-20260103-0001', '2026-01-03', 'Pemasukan: Penjualan Alat Pertanian Modern', 46, 'pemasukan', '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
+(145, 'JV-20260104-0001', '2026-01-04', 'Pemasukan: Jasa Pengolahan Lahan', 47, 'pemasukan', '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
+(146, 'JV-20260105-0001', '2026-01-05', 'Pemasukan: Jasa Konsultasi Pertanian', 48, 'pemasukan', '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
+(147, 'JV-20260106-0001', '2026-01-06', 'Pemasukan: Penjualan Peralatan Irigasi', 49, 'pemasukan', '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
+(148, 'JV-20260107-0001', '2026-01-07', 'Pemasukan: Penjualan Bibit Sayuran', 50, 'pemasukan', '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
+(149, 'JV-20260108-0001', '2026-01-08', 'Pemasukan: Jasa Pemupukan Lahan', 51, 'pemasukan', '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
+(150, 'JV-20260109-0001', '2026-01-09', 'Pemasukan: Penjualan Pupuk Cair Nutrisi', 52, 'pemasukan', '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
+(151, 'JV-20260110-0001', '2026-01-10', 'Pemasukan: Jasa Pengendalian Hama', 53, 'pemasukan', '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
+(152, 'JV-20260111-0001', '2026-01-11', 'Pemasukan: Penjualan Alat Panen Modern', 54, 'pemasukan', '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
+(153, 'JV-20260112-0001', '2026-01-12', 'Pemasukan: Jasa Penyemaian Benih', 55, 'pemasukan', '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
+(154, 'JV-20260113-0001', '2026-01-13', 'Pemasukan: Penjualan Perlengkapan Ternak', 56, 'pemasukan', '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
+(155, 'JV-20260114-0001', '2026-01-14', 'Pemasukan: Jasa Pengeringan Hasil Panen', 57, 'pemasukan', '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
+(156, 'JV-20260115-0001', '2026-01-15', 'Pemasukan: Penjualan Peralatan Pengolahan', 58, 'pemasukan', '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
+(157, 'JV-20260116-0001', '2026-01-16', 'Pemasukan: Jasa Desinfeksi Lahan', 59, 'pemasukan', '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
+(158, 'JV-20260117-0001', '2026-01-17', 'Pemasukan: Penjualan Media Tanam', 60, 'pemasukan', '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
+(159, 'JV-20260118-0001', '2026-01-18', 'Pemasukan: Jasa Pemeliharaan Tanaman', 61, 'pemasukan', '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
+(160, 'JV-20260119-0001', '2026-01-19', 'Pemasukan: Penjualan Peralatan Hidroponik', 62, 'pemasukan', '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
+(161, 'JV-20260120-0001', '2026-01-20', 'Pemasukan: Jasa Analisis Tanah', 63, 'pemasukan', '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
+(162, 'JV-20260101-0002', '2026-01-01', 'Pengeluaran: Gaji Karyawan Bulan Januari', 48, 'pengeluaran', '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
+(163, 'JV-20260102-0002', '2026-01-02', 'Pengeluaran: Biaya Listrik Kantor', 49, 'pengeluaran', '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
+(164, 'JV-20260103-0002', '2026-01-03', 'Pengeluaran: Biaya Air Bersih', 50, 'pengeluaran', '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
+(165, 'JV-20260104-0002', '2026-01-04', 'Pengeluaran: Pembelian Pupuk untuk Stok', 51, 'pengeluaran', '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
+(166, 'JV-20260105-0002', '2026-01-05', 'Pengeluaran: Pembelian Benih untuk Stok', 52, 'pengeluaran', '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
+(167, 'JV-20260106-0002', '2026-01-06', 'Pengeluaran: Biaya Transportasi Operasional', 53, 'pengeluaran', '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
+(168, 'JV-20260107-0002', '2026-01-07', 'Pengeluaran: Biaya Bensin Kendaraan', 54, 'pengeluaran', '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
+(169, 'JV-20260108-0002', '2026-01-08', 'Pengeluaran: Biaya Perawatan Alat', 55, 'pengeluaran', '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
+(170, 'JV-20260109-0002', '2026-01-09', 'Pengeluaran: Biaya Sewa Gudang', 56, 'pengeluaran', '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
+(171, 'JV-20260110-0002', '2026-01-10', 'Pengeluaran: Biaya Promosi dan Iklan', 57, 'pengeluaran', '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
+(172, 'JV-20260111-0002', '2026-01-11', 'Pengeluaran: Biaya ATK Kantor', 58, 'pengeluaran', '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
+(173, 'JV-20260112-0002', '2026-01-12', 'Pengeluaran: Biaya Internet dan Telepon', 59, 'pengeluaran', '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
+(174, 'JV-20260113-0002', '2026-01-13', 'Pengeluaran: Biaya Pajak Bulanan', 60, 'pengeluaran', '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
+(175, 'JV-20260114-0002', '2026-01-14', 'Pengeluaran: Biaya Asuransi Karyawan', 61, 'pengeluaran', '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
+(176, 'JV-20260115-0002', '2026-01-15', 'Pengeluaran: Biaya Pelatihan Karyawan', 62, 'pengeluaran', '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
+(177, 'JV-20260116-0002', '2026-01-16', 'Pengeluaran: Biaya Perlengkapan Kebersihan', 63, 'pengeluaran', '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
+(178, 'JV-20260117-0002', '2026-01-17', 'Pengeluaran: Biaya Perbaikan Kendaraan', 64, 'pengeluaran', '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
+(179, 'JV-20260118-0002', '2026-01-18', 'Pengeluaran: Biaya Pengiriman Barang', 65, 'pengeluaran', '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
+(180, 'JV-20260119-0002', '2026-01-19', 'Pengeluaran: Biaya Maintenance Website', 66, 'pengeluaran', '2026-02-05 05:12:51', '2026-02-05 05:12:51'),
+(181, 'JV-20260120-0002', '2026-01-20', 'Pengeluaran: Biaya Sewa Lahan Percobaan', 67, 'pengeluaran', '2026-02-05 05:12:51', '2026-02-05 05:12:51');
 
 -- --------------------------------------------------------
 
@@ -379,34 +379,34 @@ CREATE TABLE `laba_rugi` (
   `sumber` varchar(100) DEFAULT NULL,
   `jumlah` int(30) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
-  `id_user` int(11) DEFAULT NULL
+  `id_akun` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `laba_rugi`
 --
 
-INSERT INTO `laba_rugi` (`id_laba_rugi`, `tanggal`, `sumber`, `jumlah`, `status`, `id_user`) VALUES
-(27, '2026-01-01', 'Pendapatan Penjualan Pupuk', 2500000, 1, 1),
-(28, '2026-01-02', 'Pendapatan Penjualan Benih', 3000000, 1, 1),
-(29, '2026-01-03', 'Pendapatan Jasa Pengolahan Lahan', 1800000, 1, 1),
-(30, '2026-01-04', 'Pendapatan Jasa Konsultasi', 1200000, 1, 1),
-(31, '2026-01-05', 'Pendapatan Penjualan Alat', 4500000, 1, 1),
-(32, '2026-01-06', 'HPP Pupuk yang Terjual', 1500000, 2, 1),
-(33, '2026-01-07', 'HPP Benih yang Terjual', 1800000, 2, 1),
-(34, '2026-01-08', 'HPP Alat yang Terjual', 3000000, 2, 1),
-(35, '2026-01-09', 'Beban Gaji Karyawan', 8000000, 3, 1),
-(36, '2026-01-10', 'Beban Operasional', 2500000, 3, 1),
-(37, '2026-01-11', 'Beban Transportasi', 1200000, 3, 1),
-(38, '2026-01-12', 'Beban Sewa Gudang', 2000000, 3, 1),
-(39, '2026-01-13', 'Beban Listrik & Air', 800000, 3, 1),
-(40, '2026-01-14', 'Beban Perawatan', 1000000, 3, 1),
-(41, '2026-01-15', 'Beban Promosi', 1500000, 3, 1),
-(42, '2026-01-16', 'Beban Administrasi', 750000, 3, 1),
-(43, '2026-01-17', 'Beban Pajak', 1000000, 3, 1),
-(44, '2026-01-18', 'Beban Asuransi', 1200000, 3, 1),
-(45, '2026-01-19', 'Beban Pelatihan', 900000, 3, 1),
-(46, '2026-01-20', 'Laba Bersih Bulanan', 5000000, 4, 1);
+INSERT INTO `laba_rugi` (`id_laba_rugi`, `tanggal`, `sumber`, `jumlah`, `status`, `id_akun`) VALUES
+(27, '2026-01-01', 'Pendapatan Penjualan Pupuk', 2500000, 1, 86),
+(28, '2026-01-02', 'Pendapatan Penjualan Benih', 3000000, 1, 86),
+(29, '2026-01-03', 'Pendapatan Jasa Pengolahan Lahan', 1800000, 1, 86),
+(30, '2026-01-04', 'Pendapatan Jasa Konsultasi', 1200000, 1, 86),
+(31, '2026-01-05', 'Pendapatan Penjualan Alat', 4500000, 1, 86),
+(32, '2026-01-06', 'HPP Pupuk yang Terjual', 1500000, 2, 87),
+(33, '2026-01-07', 'HPP Benih yang Terjual', 1800000, 2, 87),
+(34, '2026-01-08', 'HPP Alat yang Terjual', 3000000, 2, 87),
+(35, '2026-01-09', 'Beban Gaji Karyawan', 8000000, 3, 87),
+(36, '2026-01-10', 'Beban Operasional', 2500000, 3, 87),
+(37, '2026-01-11', 'Beban Transportasi', 1200000, 3, 87),
+(38, '2026-01-12', 'Beban Sewa Gudang', 2000000, 3, 87),
+(39, '2026-01-13', 'Beban Listrik & Air', 800000, 3, 87),
+(40, '2026-01-14', 'Beban Perawatan', 1000000, 3, 87),
+(41, '2026-01-15', 'Beban Promosi', 1500000, 3, 87),
+(42, '2026-01-16', 'Beban Administrasi', 750000, 3, 87),
+(43, '2026-01-17', 'Beban Pajak', 1000000, 3, 87),
+(44, '2026-01-18', 'Beban Asuransi', 1200000, 3, 87),
+(45, '2026-01-19', 'Beban Pelatihan', 900000, 3, 87),
+(46, '2026-01-20', 'Laba Bersih Bulanan', 5000000, 4, 86);
 
 -- --------------------------------------------------------
 
@@ -424,34 +424,34 @@ CREATE TABLE `neraca_saldo` (
   `pergerakan_debit` int(30) DEFAULT NULL,
   `pergerakan_kredit` int(30) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
-  `id_user` int(11) DEFAULT NULL
+  `id_akun` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `neraca_saldo`
 --
 
-INSERT INTO `neraca_saldo` (`id_neraca_saldo`, `tanggal`, `nama_akun`, `nomor_akun`, `saldo_awal_debit`, `saldo_awal_kredit`, `pergerakan_debit`, `pergerakan_kredit`, `status`, `id_user`) VALUES
-(27, '2026-01-01', 'Kas', '1-1001', 50000000, 0, 25000000, 15000000, 1, 1),
-(28, '2026-01-02', 'Bank BCA', '1-1002', 100000000, 0, 50000000, 30000000, 1, 1),
-(29, '2026-01-03', 'Piutang Usaha', '1-1003', 25000000, 0, 15000000, 5000000, 1, 1),
-(30, '2026-01-04', 'Persediaan Pupuk', '1-1004', 75000000, 0, 35000000, 20000000, 1, 1),
-(31, '2026-01-05', 'Persediaan Benih', '1-1005', 30000000, 0, 5000000, 0, 1, 1),
-(32, '2026-01-06', 'Peralatan Pertanian', '1-1006', 45000000, 0, 15000000, 5000000, 1, 1),
-(33, '2026-01-07', 'Utang Usaha', '2-1001', 0, 35000000, 15000000, 25000000, 2, 1),
-(34, '2026-01-08', 'Utang Gaji', '2-1002', 0, 5000000, 3000000, 5000000, 2, 1),
-(35, '2026-01-09', 'Utang Bank', '2-1003', 0, 20000000, 10000000, 15000000, 3, 1),
-(36, '2026-01-10', 'Modal Awal', '3-1001', 0, 200000000, 0, 0, 3, 1),
-(37, '2026-01-11', 'Laba Ditahan', '3-1002', 0, 15000000, 0, 5000000, 4, 1),
-(38, '2026-01-12', 'Pendapatan Penjualan Pupuk', '4-1001', 0, 85000000, 0, 120000000, 4, 1),
-(39, '2026-01-13', 'Pendapatan Penjualan Benih', '4-1002', 0, 65000000, 0, 95000000, 4, 1),
-(40, '2026-01-14', 'Pendapatan Jasa', '4-1003', 0, 5000000, 0, 8000000, 5, 1),
-(41, '2026-01-15', 'Beban Gaji', '5-1001', 15000000, 0, 25000000, 0, 5, 1),
-(42, '2026-01-16', 'Beban Operasional', '5-1002', 3000000, 0, 5000000, 0, 5, 1),
-(43, '2026-01-17', 'Beban Peralatan', '5-1003', 8000000, 0, 12000000, 0, 5, 1),
-(44, '2026-01-18', 'Beban Transportasi', '5-1004', 2500000, 0, 5000000, 0, 5, 1),
-(45, '2026-01-19', 'Beban Pajak', '5-1005', 1500000, 0, 2500000, 0, 5, 1),
-(46, '2026-01-20', 'Beban Lain-lain', '5-1006', 2000000, 0, 3000000, 0, 5, 1);
+INSERT INTO `neraca_saldo` (`id_neraca_saldo`, `tanggal`, `nama_akun`, `nomor_akun`, `saldo_awal_debit`, `saldo_awal_kredit`, `pergerakan_debit`, `pergerakan_kredit`, `status`, `id_akun`) VALUES
+(27, '2026-01-01', 'Kas', '1-1001', 50000000, 0, 25000000, 15000000, 1, 78),
+(28, '2026-01-02', 'Bank BCA', '1-1002', 100000000, 0, 50000000, 30000000, 1, 79),
+(29, '2026-01-03', 'Piutang Usaha', '1-1003', 25000000, 0, 15000000, 5000000, 1, 81),
+(30, '2026-01-04', 'Persediaan Pupuk', '1-1004', 75000000, 0, 35000000, 20000000, 1, 82),
+(31, '2026-01-05', 'Persediaan Benih', '1-1005', 30000000, 0, 5000000, 0, 1, 82),
+(32, '2026-01-06', 'Peralatan Pertanian', '1-1006', 45000000, 0, 15000000, 5000000, 1, 78),
+(33, '2026-01-07', 'Utang Usaha', '2-1001', 0, 35000000, 15000000, 25000000, 2, 83),
+(34, '2026-01-08', 'Utang Gaji', '2-1002', 0, 5000000, 3000000, 0, 2, 84),
+(35, '2026-01-09', 'Utang Bank', '2-1003', 0, 20000000, 10000000, 15000000, 3, 83),
+(36, '2026-01-10', 'Modal Awal', '3-1001', 0, 200000000, 0, 0, 3, 85),
+(37, '2026-01-11', 'Laba Ditahan', '3-1002', 0, 15000000, 0, 5000000, 4, 85),
+(38, '2026-01-12', 'Pendapatan Penjualan Pupuk', '4-1001', 0, 85000000, 0, 120000000, 4, 86),
+(39, '2026-01-13', 'Pendapatan Penjualan Benih', '4-1002', 0, 65000000, 0, 95000000, 4, 86),
+(40, '2026-01-14', 'Pendapatan Jasa', '4-1003', 0, 5000000, 0, 8000000, 5, 86),
+(41, '2026-01-15', 'Beban Gaji', '5-1001', 15000000, 0, 25000000, 0, 5, 87),
+(42, '2026-01-16', 'Beban Operasional', '5-1002', 3000000, 0, 5000000, 0, 5, 87),
+(43, '2026-01-17', 'Beban Peralatan', '5-1003', 8000000, 0, 12000000, 0, 5, 87),
+(44, '2026-01-18', 'Beban Transportasi', '5-1004', 2500000, 0, 5000000, 0, 5, 87),
+(45, '2026-01-19', 'Beban Pajak', '5-1005', 1500000, 0, 2500000, 0, 5, 87),
+(46, '2026-01-20', 'Beban Lain-lain', '5-1006', 2000000, 0, 3000000, 0, 5, 87);
 
 -- --------------------------------------------------------
 
@@ -552,7 +552,8 @@ ALTER TABLE `admin`
 --
 ALTER TABLE `arus_kas`
   ADD PRIMARY KEY (`id_arus_kas`),
-  ADD KEY `idx_tanggal_user` (`tanggal`,`id_user`);
+  ADD KEY `idx_tanggal` (`tanggal`),
+  ADD KEY `fk_arus_kas_akun` (`id_akun`);
 
 --
 -- Indexes for table `chart_of_accounts`
@@ -565,7 +566,9 @@ ALTER TABLE `chart_of_accounts`
 -- Indexes for table `hutang`
 --
 ALTER TABLE `hutang`
-  ADD PRIMARY KEY (`id_hutang`);
+  ADD PRIMARY KEY (`id_hutang`),
+  ADD KEY `fk_hutang_akun_debet` (`id_akun_debet`),
+  ADD KEY `fk_hutang_akun_kredit` (`id_akun_kredit`);
 
 --
 -- Indexes for table `journal_entries`
@@ -595,26 +598,30 @@ ALTER TABLE `karyawan`
 --
 ALTER TABLE `laba_rugi`
   ADD PRIMARY KEY (`id_laba_rugi`),
-  ADD KEY `idx_tanggal_user` (`tanggal`,`id_user`);
+  ADD KEY `fk_laba_rugi_akun` (`id_akun`);
 
 --
 -- Indexes for table `neraca_saldo`
 --
 ALTER TABLE `neraca_saldo`
   ADD PRIMARY KEY (`id_neraca_saldo`),
-  ADD KEY `idx_tanggal_user` (`tanggal`,`id_user`);
+  ADD KEY `fk_neraca_saldo_akun` (`id_akun`);
 
 --
 -- Indexes for table `pemasukan`
 --
 ALTER TABLE `pemasukan`
-  ADD PRIMARY KEY (`id_pemasukan`);
+  ADD PRIMARY KEY (`id_pemasukan`),
+  ADD KEY `fk_pemasukan_akun_pendapatan` (`id_akun_pendapatan`),
+  ADD KEY `fk_pemasukan_akun_kas` (`id_akun_kas`);
 
 --
 -- Indexes for table `pengeluaran`
 --
 ALTER TABLE `pengeluaran`
-  ADD PRIMARY KEY (`id_pengeluaran`);
+  ADD PRIMARY KEY (`id_pengeluaran`),
+  ADD KEY `fk_pengeluaran_akun_beban` (`id_akun_beban`),
+  ADD KEY `fk_pengeluaran_akun_kas` (`id_akun_kas`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -691,11 +698,51 @@ ALTER TABLE `pengeluaran`
 --
 
 --
+-- Constraints for table `arus_kas`
+--
+ALTER TABLE `arus_kas`
+  ADD CONSTRAINT `fk_arus_kas_akun` FOREIGN KEY (`id_akun`) REFERENCES `chart_of_accounts` (`id_akun`);
+
+--
+-- Constraints for table `hutang`
+--
+ALTER TABLE `hutang`
+  ADD CONSTRAINT `fk_hutang_akun_debet` FOREIGN KEY (`id_akun_debet`) REFERENCES `chart_of_accounts` (`id_akun`),
+  ADD CONSTRAINT `fk_hutang_akun_kredit` FOREIGN KEY (`id_akun_kredit`) REFERENCES `chart_of_accounts` (`id_akun`);
+
+--
 -- Constraints for table `journal_lines`
 --
 ALTER TABLE `journal_lines`
   ADD CONSTRAINT `fk_journal_lines_akun` FOREIGN KEY (`id_akun`) REFERENCES `chart_of_accounts` (`id_akun`),
   ADD CONSTRAINT `fk_journal_lines_jurnal` FOREIGN KEY (`id_jurnal`) REFERENCES `journal_entries` (`id_jurnal`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `laba_rugi`
+--
+ALTER TABLE `laba_rugi`
+  ADD CONSTRAINT `fk_laba_rugi_akun` FOREIGN KEY (`id_akun`) REFERENCES `chart_of_accounts` (`id_akun`);
+
+--
+-- Constraints for table `neraca_saldo`
+--
+ALTER TABLE `neraca_saldo`
+  ADD CONSTRAINT `fk_neraca_saldo_akun` FOREIGN KEY (`id_akun`) REFERENCES `chart_of_accounts` (`id_akun`);
+
+--
+-- Constraints for table `pemasukan`
+--
+ALTER TABLE `pemasukan`
+  ADD CONSTRAINT `fk_pemasukan_akun_kas` FOREIGN KEY (`id_akun_kas`) REFERENCES `chart_of_accounts` (`id_akun`),
+  ADD CONSTRAINT `fk_pemasukan_akun_pendapatan` FOREIGN KEY (`id_akun_pendapatan`) REFERENCES `chart_of_accounts` (`id_akun`);
+
+--
+-- Constraints for table `pengeluaran`
+--
+ALTER TABLE `pengeluaran`
+  ADD CONSTRAINT `fk_pengeluaran_akun_beban` FOREIGN KEY (`id_akun_beban`) REFERENCES `chart_of_accounts` (`id_akun`),
+  ADD CONSTRAINT `fk_pengeluaran_akun_kas` FOREIGN KEY (`id_akun_kas`) REFERENCES `chart_of_accounts` (`id_akun`);
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

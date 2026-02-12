@@ -5,9 +5,6 @@ require_once 'vendor/vendor/autoload.php'; // Sesuaikan path sesuai struktur pro
 // Start session
 session_start();
 
-// Get user ID
-$id_user = $_SESSION['id'];
-
 // Get pimpinan name from session
 $nama_pimpinan = isset($_SESSION['pimpinan']) ? $_SESSION['pimpinan'] : 'Pimpinan';
 

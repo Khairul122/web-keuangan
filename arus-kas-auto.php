@@ -18,7 +18,6 @@ require_once 'includes/functions-jurnal.php';
 
     $tanggal_awal = isset($_GET['tanggal_awal']) ? $_GET['tanggal_awal'] : date('Y-m-01');
     $tanggal_akhir = isset($_GET['tanggal_akhir']) ? $_GET['tanggal_akhir'] : date('Y-m-t');
-    $id_user = $_SESSION['id'];
 
     // Query untuk mengambil data arus kas berdasarkan kategori
     $sql = "SELECT
@@ -35,7 +34,6 @@ require_once 'includes/functions-jurnal.php';
             LEFT JOIN journal_lines jl ON ca.id_akun = jl.id_akun
             LEFT JOIN journal_entries je ON jl.id_jurnal = je.id_jurnal
                 AND je.tanggal BETWEEN '$tanggal_awal' AND '$tanggal_akhir'
-                AND je.id_user = '$id_user'
             WHERE ca.kategori_arus_kas IN ('Operasional', 'Investasi', 'Pendanaan')
             GROUP BY ca.id_akun, ca.kategori_arus_kas
             HAVING jumlah != 0

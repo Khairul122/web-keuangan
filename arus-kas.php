@@ -101,12 +101,13 @@ WHERE tgl_pengeluaran = CURDATE() - INTERVAL 7 DAY");
                                             <th>Deskirpsi</th>
                                             <th>Nominal</th>
                                             <th>Kategori</th>
+                                            <th>Akun Terkait</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
-                                        // Query SQL untuk mengambil data dari tabel arus_kas
-                                        $sql = "SELECT * FROM arus_kas";
+                                        // Query SQL untuk mengambil data dari tabel arus_kas dengan join ke chart_of_accounts
+                                        $sql = "SELECT a.*, c.nama_akun FROM arus_kas a LEFT JOIN chart_of_accounts c ON a.id_akun = c.id_akun";
 
                                         // Lakukan query
                                         $result = $koneksi->query($sql);
@@ -135,6 +136,7 @@ WHERE tgl_pengeluaran = CURDATE() - INTERVAL 7 DAY");
                                                         echo "Tidak valid";
                                                     }
                                                     echo "</td>
+                                                    <td>" . ($row['nama_akun'] ?? 'Tidak terkait') . "</td>
                                                 </tr>";
                                                     $no++;
                                                 }

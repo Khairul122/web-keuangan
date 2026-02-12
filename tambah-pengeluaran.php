@@ -7,7 +7,6 @@ $jumlah = floatval($_GET['jumlah']);
 $sumber = mysqli_real_escape_string($koneksi, $_GET['sumber']);
 $id_akun_beban = intval($_GET['id_akun_beban'] ?? 0);
 $id_akun_kas = intval($_GET['id_akun_kas'] ?? 0);
-$id_user = $_SESSION['id'] ?? 1;
 
 if (empty($tgl_pengeluaran) || empty($jumlah) || empty($sumber)) {
     echo "<script>alert('Semua field harus diisi!'); window.history.back();</script>";

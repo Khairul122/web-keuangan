@@ -128,6 +128,8 @@ require 'cek-sesi.php';
                   <th>Tanggal</th>
                   <th>Alasan</th>
                   <th>Penghutang</th>
+                  <th>Akun Debet</th>
+                  <th>Akun Kredit</th>
                   <th>Aksi</th>
                 </tr>
               </thead>
@@ -143,7 +145,7 @@ require 'cek-sesi.php';
               </tfoot>
               <tbody>
                 <?php
-                $query = mysqli_query($koneksi, "SELECT * FROM hutang WHERE jumlah > 1000 ORDER BY tgl_hutang DESC");
+                $query = mysqli_query($koneksi, "SELECT h.*, cad.nama_akun as akun_debet, cak.nama_akun as akun_kredit FROM hutang h LEFT JOIN chart_of_accounts cad ON h.id_akun_debet = cad.id_akun LEFT JOIN chart_of_accounts cak ON h.id_akun_kredit = cak.id_akun WHERE h.jumlah > 1000 ORDER BY h.tgl_hutang DESC");
 
                 // Cek apakah query berhasil
                 if ($query) {
@@ -156,6 +158,8 @@ require 'cek-sesi.php';
                       <td><?= $data['tgl_hutang'] ?></td>
                       <td><?= $data['alasan'] ?></td>
                       <td><?= $data['penghutang'] ?></td>
+                      <td><?= $data['akun_debet'] ?? 'Tidak terkait' ?></td>
+                      <td><?= $data['akun_kredit'] ?? 'Tidak terkait' ?></td>
                       <td>
                         <!-- Button untuk modal -->
                         <a href="#" type="button" class=" fa fa-edit btn btn-primary btn-md" data-toggle="modal" data-target="#myModal<?php echo $data['id_hutang']; ?>"></a>
@@ -251,13 +255,33 @@ require 'cek-sesi.php';
           <form action="tambah-hutang.php" method="get">
             <div class="modal-body">
               Jumlah :
-              <input type="text" class="form-control" name="jumlah">
+              <input type="text" class="form-control" name="jumlah" required>
               Tanggal :
-              <input type="date" class="form-control" name="tgl_hutang">
+              <input type="date" class="form-control" name="tgl_hutang" required>
               Penghutang :
-              <input type="text" class="form-control" name="penghutang">
+              <input type="text" class="form-control" name="penghutang" required>
               Alasan :
-              <input type="text" class="form-control" name="alasan">
+              <input type="text" class="form-control" name="alasan" required>
+              Akun Debet :
+              <select class="form-control" name="id_akun_debet">
+                <option value="">-- Pilih Akun Debet --</option>
+                <?php
+                $akun_debet_query = mysqli_query($koneksi, "SELECT id_akun, nomor_akun, nama_akun FROM chart_of_accounts WHERE is_active = 1 AND jenis_akun IN ('Asset', 'Beban') ORDER BY nomor_akun");
+                while ($akun = mysqli_fetch_assoc($akun_debet_query)) {
+                    echo '<option value="'.$akun['id_akun'].'">'.$akun['nomor_akun'].' - '.$akun['nama_akun'].'</option>';
+                }
+                ?>
+              </select>
+              Akun Kredit :
+              <select class="form-control" name="id_akun_kredit">
+                <option value="">-- Pilih Akun Kredit --</option>
+                <?php
+                $akun_kredit_query = mysqli_query($koneksi, "SELECT id_akun, nomor_akun, nama_akun FROM chart_of_accounts WHERE is_active = 1 AND jenis_akun IN ('Kewajiban', 'Ekuitas', 'Pendapatan') ORDER BY nomor_akun");
+                while ($akun = mysqli_fetch_assoc($akun_kredit_query)) {
+                    echo '<option value="'.$akun['id_akun'].'">'.$akun['nomor_akun'].' - '.$akun['nama_akun'].'</option>';
+                }
+                ?>
+              </select>
             </div>
             <!-- footer modal -->
             <div class="modal-footer">

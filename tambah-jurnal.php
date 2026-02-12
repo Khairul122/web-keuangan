@@ -37,7 +37,7 @@ mysqli_begin_transaction($koneksi);
 
 try {
     // Insert journal header
-    $insert_header = mysqli_query($koneksi, "INSERT INTO journal_entries (nomor_jurnal, tanggal, keterangan, id_ref_transaksi, tipe_ref_transaksi, id_user) VALUES ('$nomor_jurnal', '$tanggal', '$keterangan', NULL, 'manual', ".$_SESSION['id'].")");
+    $insert_header = mysqli_query($koneksi, "INSERT INTO journal_entries (nomor_jurnal, tanggal, keterangan, id_ref_transaksi, tipe_ref_transaksi) VALUES ('$nomor_jurnal', '$tanggal', '$keterangan', NULL, 'manual')");
     
     if(!$insert_header) {
         throw new Exception("Gagal menyimpan header jurnal");
