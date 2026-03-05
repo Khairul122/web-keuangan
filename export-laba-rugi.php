@@ -2,12 +2,25 @@
 // Include the mpdf library
 require_once 'vendor/vendor/autoload.php'; // Sesuaikan path sesuai struktur proyek Anda
 
+use Mpdf\Mpdf;
+
 // Start session
 session_start();
 
 // Get filter parameters
-$tanggal_awal = isset($_GET['tanggal_awal']) ? $_GET['tanggal_awal'] : date('Y-m-01');
-$tanggal_akhir = isset($_GET['tanggal_akhir']) ? $_GET['tanggal_akhir'] : date('Y-m-t');
+$bulan = isset($_GET['bulan']) ? (int)$_GET['bulan'] : (int)date('n');
+$tahun = isset($_GET['tahun']) ? (int)$_GET['tahun'] : (int)date('Y');
+
+if ($bulan < 1 || $bulan > 12) {
+    $bulan = (int)date('n');
+}
+
+if ($tahun < 2000 || $tahun > 2100) {
+    $tahun = (int)date('Y');
+}
+
+$tanggal_awal = sprintf('%04d-%02d-01', $tahun, $bulan);
+$tanggal_akhir = date('Y-m-t', strtotime($tanggal_awal));
 
 // Format tanggal untuk tampilan
 $tgl_awal_fmt = date('d F Y', strtotime($tanggal_awal));
@@ -17,7 +30,7 @@ $tgl_akhir_fmt = date('d F Y', strtotime($tanggal_akhir));
 $nama_pimpinan = isset($_SESSION['pimpinan']) ? $_SESSION['pimpinan'] : 'Pimpinan';
 
 // Create an instance of the mPDF class
-$mpdf = new \Mpdf\Mpdf();
+$mpdf = new Mpdf();
 
 // Start buffering the output
 ob_start();

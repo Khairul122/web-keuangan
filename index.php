@@ -107,7 +107,7 @@ require 'cek-sesi.php';
       <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
         <?php if ($_SESSION['level'] === 'admin' || $_SESSION['level'] === 'pemilik'): ?>
-        <a href="export-semua.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Download Laporan</a>
+        <a href="export-semua.php?bulan=<?php echo date('n'); ?>&tahun=<?php echo date('Y'); ?>" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Download Laporan</a>
         <?php endif; ?>
         
         <?php if(isset($_GET['pesan'])): ?>

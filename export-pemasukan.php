@@ -2,14 +2,31 @@
 // Include the mpdf library
 require_once 'vendor/vendor/autoload.php'; // Sesuaikan path sesuai struktur proyek Anda
 
+use Mpdf\Mpdf;
+
 // Start session
 session_start();
+
+$bulan = isset($_GET['bulan']) ? (int)$_GET['bulan'] : (int)date('n');
+$tahun = isset($_GET['tahun']) ? (int)$_GET['tahun'] : (int)date('Y');
+
+if ($bulan < 1 || $bulan > 12) {
+    $bulan = (int)date('n');
+}
+
+if ($tahun < 2000 || $tahun > 2100) {
+    $tahun = (int)date('Y');
+}
+
+$tanggal_awal = sprintf('%04d-%02d-01', $tahun, $bulan);
+$tanggal_akhir = date('Y-m-t', strtotime($tanggal_awal));
+$periode_label = date('F Y', strtotime($tanggal_awal));
 
 // Get pimpinan name from session
 $nama_pimpinan = isset($_SESSION['pimpinan']) ? $_SESSION['pimpinan'] : 'Pimpinan';
 
 // Create an instance of the mPDF class
-$mpdf = new \Mpdf\Mpdf();
+$mpdf = new Mpdf();
 
 // Start buffering the output
 ob_start();
@@ -54,7 +71,8 @@ ob_start();
 <h4>Kec. Koto Tangah, Kota Padang, Sumatera Barat 25586</h4>
 <hr class="custom-line">
 
-<h4 style="text-align: center; margin-bottom: 20px;">LAPORAN PEMASUKAN</h4>
+<h4 style="text-align: center; margin-bottom: 5px;">LAPORAN PEMASUKAN</h4>
+<h4 style="text-align: center; margin-top: 0px; margin-bottom: 20px;">Periode: <?php echo $periode_label; ?></h4>
 
 <table>
     <thead>
@@ -71,7 +89,7 @@ ob_start();
         include "koneksi.php";
 
         // Query untuk menampilkan data pemasukan
-        $query = mysqli_query($koneksi, "SELECT * FROM pemasukan ORDER BY tgl_pemasukan DESC");
+        $query = mysqli_query($koneksi, "SELECT * FROM pemasukan WHERE tgl_pemasukan BETWEEN '$tanggal_awal' AND '$tanggal_akhir' ORDER BY tgl_pemasukan DESC");
 
         $no = 1;
         $total_pemasukan = 0;

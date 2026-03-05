@@ -1,7 +1,22 @@
     <?php
-	header("Content-type: application/vnd-ms-excel");
-	header("Content-Disposition: attachment; filename=Data_Pemasukan_Pengeluaran.xls");
-	?>
+    $bulan = isset($_GET['bulan']) ? (int)$_GET['bulan'] : (int)date('n');
+    $tahun = isset($_GET['tahun']) ? (int)$_GET['tahun'] : (int)date('Y');
+
+    if ($bulan < 1 || $bulan > 12) {
+        $bulan = (int)date('n');
+    }
+
+    if ($tahun < 2000 || $tahun > 2100) {
+        $tahun = (int)date('Y');
+    }
+
+    $tanggal_awal = sprintf('%04d-%02d-01', $tahun, $bulan);
+    $tanggal_akhir = date('Y-m-t', strtotime($tanggal_awal));
+    $periode_label = date('F Y', strtotime($tanggal_awal));
+
+    header("Content-type: application/vnd-ms-excel");
+    header("Content-Disposition: attachment; filename=Data_Pemasukan_Pengeluaran_" . date('Ym', strtotime($tanggal_awal)) . ".xls");
+    ?>
     <style>
     	h1,
     	h4 {
@@ -29,6 +44,7 @@
     <h4>Jl. Pulai, Batang Kabung Ganting</h4>
     <h4>Kec. Koto Tangah, Kota Padang, Sumatera Barat 25586</h4>
     <hr class="custom-line">
+    <h4>Periode: <?php echo $periode_label; ?></h4>
     <table border="1" cellpadding="5">
     	<tr>
     		<th>No</th>
@@ -40,7 +56,7 @@
 		// Load file koneksi.php  
 		include "koneksi.php";
 		// Buat query untuk menampilkan semua data siswa 
-		$query = mysqli_query($koneksi, "SELECT * FROM pemasukan");
+		$query = mysqli_query($koneksi, "SELECT * FROM pemasukan WHERE tgl_pemasukan BETWEEN '$tanggal_awal' AND '$tanggal_akhir'");
 		// Untuk penomoran tabel, di awal set dengan 1 
 		while ($data = mysqli_fetch_array($query)) {
 			// Ambil semua data dari hasil eksekusi $sql 
@@ -64,7 +80,7 @@
     	</tr>
     	<?php
 		// Buat query untuk menampilkan semua data siswa 
-		$query = mysqli_query($koneksi, "SELECT * FROM pengeluaran");
+		$query = mysqli_query($koneksi, "SELECT * FROM pengeluaran WHERE tgl_pengeluaran BETWEEN '$tanggal_awal' AND '$tanggal_akhir'");
 		// Untuk penomoran tabel, di awal set dengan 1 
 		while ($data = mysqli_fetch_array($query)) {
 			// Ambil semua data dari hasil eksekusi $sql 

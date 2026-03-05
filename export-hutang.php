@@ -2,22 +2,39 @@
 // Include the mpdf library
 require_once 'vendor/vendor/autoload.php'; // Sesuaikan path sesuai struktur proyek Anda
 
+use Mpdf\Mpdf;
+
 // Start session
 session_start();
 
 // Get format parameter (default to pdf)
 $format = isset($_GET['format']) ? $_GET['format'] : 'pdf';
 
+$bulan = isset($_GET['bulan']) ? (int)$_GET['bulan'] : (int)date('n');
+$tahun = isset($_GET['tahun']) ? (int)$_GET['tahun'] : (int)date('Y');
+
+if ($bulan < 1 || $bulan > 12) {
+    $bulan = (int)date('n');
+}
+
+if ($tahun < 2000 || $tahun > 2100) {
+    $tahun = (int)date('Y');
+}
+
+$tanggal_awal = sprintf('%04d-%02d-01', $tahun, $bulan);
+$tanggal_akhir = date('Y-m-t', strtotime($tanggal_awal));
+$periode_label = date('F Y', strtotime($tanggal_awal));
+
 // Get pimpinan name from session
 $nama_pimpinan = isset($_SESSION['pimpinan']) ? $_SESSION['pimpinan'] : 'Pimpinan';
 
 // Create an instance of the mPDF class
 if($format === 'excel') {
-    $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4-L']);
+    $mpdf = new Mpdf(['mode' => 'utf-8', 'format' => 'A4-L']);
     $filename = 'Laporan_Hutang_' . date('Y-m-d') . '.xlsx';
     $disposition = 'I'; // Inline for Excel
 } else {
-    $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4-L']);
+    $mpdf = new Mpdf(['mode' => 'utf-8', 'format' => 'A4-L']);
     $filename = 'Laporan_Hutang_' . date('Y-m-d') . '.pdf';
     $disposition = 'I'; // Inline for PDF
 }
@@ -83,7 +100,7 @@ ob_start();
 <hr class="custom-line">
 
 <h4 style="text-align: center; margin-bottom: 5px;">LAPORAN HUTANG</h4>
-<h4 style="text-align: center; margin-top: 0px; margin-bottom: 20px;">Periode: <?php echo date('d F Y'); ?></h4>
+<h4 style="text-align: center; margin-top: 0px; margin-bottom: 20px;">Periode: <?php echo $periode_label; ?></h4>
 
 <!-- Tabel data -->
 <table>
@@ -103,7 +120,7 @@ ob_start();
         include('koneksi.php');
 
         // Query untuk menampilkan data dari tabel hutang
-        $query_hutang = "SELECT * FROM hutang ORDER BY tgl_hutang DESC";
+        $query_hutang = "SELECT * FROM hutang WHERE tgl_hutang BETWEEN '$tanggal_awal' AND '$tanggal_akhir' ORDER BY tgl_hutang DESC";
 
         // Jalankan query hutang
         $result_hutang = mysqli_query($koneksi, $query_hutang);

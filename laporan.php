@@ -1,5 +1,31 @@
 <?php
 require 'cek-sesi.php';
+
+$bulan = isset($_GET['bulan']) ? (int)$_GET['bulan'] : (int)date('n');
+$tahun = isset($_GET['tahun']) ? (int)$_GET['tahun'] : (int)date('Y');
+
+if ($bulan < 1 || $bulan > 12) {
+    $bulan = (int)date('n');
+}
+
+if ($tahun < 2000 || $tahun > 2100) {
+    $tahun = (int)date('Y');
+}
+
+$nama_bulan = [
+    1 => 'Januari',
+    2 => 'Februari',
+    3 => 'Maret',
+    4 => 'April',
+    5 => 'Mei',
+    6 => 'Juni',
+    7 => 'Juli',
+    8 => 'Agustus',
+    9 => 'September',
+    10 => 'Oktober',
+    11 => 'November',
+    12 => 'Desember'
+];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -69,6 +95,46 @@ require 'cek-sesi.php';
                         </div>
                     </div>
                     <!-- End Form Input Nama Pimpinan -->
+                    <div class="card mb-4">
+                        <div class="card-header py-3 bg-light">
+                            <h6 class="m-0 font-weight-bold text-primary">Filter Laporan</h6>
+                        </div>
+                        <div class="card-body">
+                            <form method="GET" action="laporan.php">
+                                <div class="form-row align-items-end">
+                                    <div class="form-group col-md-4">
+                                        <label for="bulan">Bulan</label>
+                                        <select class="form-control" id="bulan" name="bulan" required>
+                                            <?php foreach ($nama_bulan as $nilai_bulan => $label_bulan) { ?>
+                                                <option value="<?php echo $nilai_bulan; ?>" <?php echo $nilai_bulan === $bulan ? 'selected' : ''; ?>>
+                                                    <?php echo $label_bulan; ?>
+                                                </option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="tahun">Tahun</label>
+                                        <select class="form-control" id="tahun" name="tahun" required>
+                                            <?php
+                                            $tahun_sekarang = (int)date('Y');
+                                            for ($y = $tahun_sekarang - 5; $y <= $tahun_sekarang + 1; $y++) {
+                                            ?>
+                                                <option value="<?php echo $y; ?>" <?php echo $y === $tahun ? 'selected' : ''; ?>>
+                                                    <?php echo $y; ?>
+                                                </option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fa fa-filter"></i> Terapkan Filter
+                                        </button>
+                                    </div>
+                                </div>
+                                <small class="text-muted">Periode terpilih: <?php echo $nama_bulan[$bulan] . ' ' . $tahun; ?></small>
+                            </form>
+                        </div>
+                    </div>
                     <div class="table-responsive">
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
@@ -82,23 +148,18 @@ require 'cek-sesi.php';
 
                             <tbody>
                                 <?php
-                                $pemasukan = mysqli_query($koneksi, "SELECT * FROM pemasukan");
-                                while ($masuk = mysqli_fetch_array($pemasukan)) {
-                                    $arraymasuk[] = $masuk['jumlah'];
-                                }
-                                $jumlahmasuk = array_sum($arraymasuk);
+                                $filter_pemasukan = "WHERE MONTH(tgl_pemasukan) = $bulan AND YEAR(tgl_pemasukan) = $tahun";
+                                $filter_pengeluaran = "WHERE MONTH(tgl_pengeluaran) = $bulan AND YEAR(tgl_pengeluaran) = $tahun";
 
-                                $pengeluaran = mysqli_query($koneksi, "SELECT * FROM pengeluaran");
-                                while ($keluar = mysqli_fetch_array($pengeluaran)) {
-                                    $arraykeluar[] = $keluar['jumlah'];
-                                }
-                                $jumlahkeluar = array_sum($arraykeluar);
+                                $summary_pemasukan = mysqli_query($koneksi, "SELECT COUNT(*) AS total, SUM(jumlah) AS total_jumlah FROM pemasukan $filter_pemasukan");
+                                $row_pemasukan = mysqli_fetch_assoc($summary_pemasukan);
+                                $query1 = (int)$row_pemasukan['total'];
+                                $jumlahmasuk = $row_pemasukan['total_jumlah'] ? (float)$row_pemasukan['total_jumlah'] : 0;
 
-                                $query1 = mysqli_query($koneksi, "SELECT id_pemasukan FROM pemasukan");
-                                $query1 = mysqli_num_rows($query1);
-
-                                $query2 = mysqli_query($koneksi, "SELECT id_pengeluaran FROM pengeluaran");
-                                $query2 = mysqli_num_rows($query2);
+                                $summary_pengeluaran = mysqli_query($koneksi, "SELECT COUNT(*) AS total, SUM(jumlah) AS total_jumlah FROM pengeluaran $filter_pengeluaran");
+                                $row_pengeluaran = mysqli_fetch_assoc($summary_pengeluaran);
+                                $query2 = (int)$row_pengeluaran['total'];
+                                $jumlahkeluar = $row_pengeluaran['total_jumlah'] ? (float)$row_pengeluaran['total_jumlah'] : 0;
                                 $no = 1;
                                 ?>
 
@@ -109,7 +170,7 @@ require 'cek-sesi.php';
                                     <td>Rp. <?= number_format($jumlahmasuk, 2, ',', '.'); ?></td>
                                     <td>
                                         <!-- Button untuk modal -->
-                                        <a href="export-pemasukan.php" type="button" class="btn btn-primary btn-md"><i class="fa fa-download"></i></a>
+                                        <a href="export-pemasukan.php?bulan=<?php echo $bulan; ?>&tahun=<?php echo $tahun; ?>" type="button" class="btn btn-primary btn-md"><i class="fa fa-download"></i></a>
                                     </td>
                                 </tr>
 
@@ -120,7 +181,7 @@ require 'cek-sesi.php';
                                     <td>Rp. <?= number_format($jumlahkeluar, 2, ',', '.'); ?></td>
                                     <td>
                                         <!-- Button untuk modal -->
-                                        <a href="export-pengeluaran.php" type="button" class="btn btn-primary btn-md"><i class="fa fa-download"></i></a>
+                                        <a href="export-pengeluaran.php?bulan=<?php echo $bulan; ?>&tahun=<?php echo $tahun; ?>" type="button" class="btn btn-primary btn-md"><i class="fa fa-download"></i></a>
                                     </td>
                                 </tr>
 
@@ -129,7 +190,7 @@ require 'cek-sesi.php';
                                     <td colspan="3" style="text-align: left;">Laba Rugi</td>
                                     <td>
                                         <!-- Button untuk modal -->
-                                        <a href="export-laba-rugi.php" type="button" class="btn btn-primary btn-md" target="_blank"><i class="fa fa-download"></i></a>
+                                        <a href="export-laba-rugi.php?bulan=<?php echo $bulan; ?>&tahun=<?php echo $tahun; ?>" type="button" class="btn btn-primary btn-md" target="_blank"><i class="fa fa-download"></i></a>
 
                                     </td>
                                 </tr>
@@ -139,7 +200,7 @@ require 'cek-sesi.php';
                                     <td colspan="3" style="text-align: left;">Neraca Saldo</td>
                                     <td>
                                         <!-- Button untuk modal -->
-                                        <a href="export-neraca-saldo.php" type="button" class="btn btn-primary btn-md"><i class="fa fa-download"></i></a>
+                                        <a href="export-neraca-saldo.php?bulan=<?php echo $bulan; ?>&tahun=<?php echo $tahun; ?>" type="button" class="btn btn-primary btn-md"><i class="fa fa-download"></i></a>
                                     </td>
                                 </tr>
 
@@ -148,7 +209,7 @@ require 'cek-sesi.php';
                                     <td colspan="3" style="text-align: left;">Arus Kas</td>
                                     <td>
                                         <!-- Button untuk modal -->
-                                        <a href="export-arus-kas.php" type="button" class="btn btn-primary btn-md"><i class="fa fa-download"></i></a>
+                                        <a href="export-arus-kas.php?bulan=<?php echo $bulan; ?>&tahun=<?php echo $tahun; ?>" type="button" class="btn btn-primary btn-md"><i class="fa fa-download"></i></a>
                                     </td>
                                 </tr>
                                 
@@ -157,7 +218,7 @@ require 'cek-sesi.php';
                                     <td colspan="3" style="text-align: left;">Hutang</td>
                                     <td>
                                         <!-- Button untuk modal -->
-                                        <a href="export-hutang.php" type="button" class="btn btn-primary btn-md"><i class="fa fa-download"></i></a>
+                                        <a href="export-hutang.php?bulan=<?php echo $bulan; ?>&tahun=<?php echo $tahun; ?>" type="button" class="btn btn-primary btn-md"><i class="fa fa-download"></i></a>
                                     </td>
                                 </tr>
                             </tbody>

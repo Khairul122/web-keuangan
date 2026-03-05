@@ -5,6 +5,36 @@ if ($_SESSION['level'] !== 'pemilik') {
     header("location:index.php?pesan=forbidden");
     exit();
 }
+
+$bulan = isset($_GET['bulan']) ? (int)$_GET['bulan'] : (int)date('n');
+$tahun = isset($_GET['tahun']) ? (int)$_GET['tahun'] : (int)date('Y');
+
+if ($bulan < 1 || $bulan > 12) {
+  $bulan = (int)date('n');
+}
+
+if ($tahun < 2000 || $tahun > 2100) {
+  $tahun = (int)date('Y');
+}
+
+$nama_bulan = [
+  1 => 'Januari',
+  2 => 'Februari',
+  3 => 'Maret',
+  4 => 'April',
+  5 => 'Mei',
+  6 => 'Juni',
+  7 => 'Juli',
+  8 => 'Agustus',
+  9 => 'September',
+  10 => 'Oktober',
+  11 => 'November',
+  12 => 'Desember'
+];
+
+$tanggal_awal = sprintf('%04d-%02d-01', $tahun, $bulan);
+$tanggal_akhir = date('Y-m-t', strtotime($tanggal_awal));
+$periode_label = $nama_bulan[$bulan] . ' ' . $tahun;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -51,12 +81,45 @@ if ($_SESSION['level'] !== 'pemilik') {
                 </a>
                 <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
                   <div class="dropdown-header">Opsi Laporan:</div>
-                  <a class="dropdown-item" href="export-hutang.php" target="_blank">Export PDF</a>
-                  <a class="dropdown-item" href="export-hutang.php?format=excel" target="_blank">Export Excel</a>
+                  <a class="dropdown-item" href="export-hutang.php?bulan=<?php echo $bulan; ?>&tahun=<?php echo $tahun; ?>" target="_blank">Export PDF</a>
+                  <a class="dropdown-item" href="export-hutang.php?format=excel&bulan=<?php echo $bulan; ?>&tahun=<?php echo $tahun; ?>" target="_blank">Export Excel</a>
                 </div>
               </div>
             </div>
             <div class="card-body">
+              <form method="GET" class="mb-3">
+                <div class="form-row align-items-end">
+                  <div class="form-group col-md-4">
+                    <label for="bulan">Bulan</label>
+                    <select class="form-control" id="bulan" name="bulan" required>
+                      <?php foreach ($nama_bulan as $nilai_bulan => $label_bulan) { ?>
+                        <option value="<?php echo $nilai_bulan; ?>" <?php echo $nilai_bulan === $bulan ? 'selected' : ''; ?>>
+                          <?php echo $label_bulan; ?>
+                        </option>
+                      <?php } ?>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="tahun">Tahun</label>
+                    <select class="form-control" id="tahun" name="tahun" required>
+                      <?php
+                      $tahun_sekarang = (int)date('Y');
+                      for ($y = $tahun_sekarang - 5; $y <= $tahun_sekarang + 1; $y++) {
+                      ?>
+                        <option value="<?php echo $y; ?>" <?php echo $y === $tahun ? 'selected' : ''; ?>>
+                          <?php echo $y; ?>
+                        </option>
+                      <?php } ?>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <button type="submit" class="btn btn-primary">
+                      <i class="fas fa-filter"></i> Terapkan Filter
+                    </button>
+                  </div>
+                </div>
+                <small class="text-muted">Periode terpilih: <?php echo $periode_label; ?></small>
+              </form>
               <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
@@ -71,7 +134,7 @@ if ($_SESSION['level'] !== 'pemilik') {
                   </thead>
                   <tbody>
                     <?php
-                    $query = mysqli_query($koneksi, "SELECT * FROM hutang ORDER BY tgl_hutang DESC");
+                    $query = mysqli_query($koneksi, "SELECT * FROM hutang WHERE tgl_hutang BETWEEN '$tanggal_awal' AND '$tanggal_akhir' ORDER BY tgl_hutang DESC");
                     $no = 1;
                     while ($data = mysqli_fetch_assoc($query)) {
                       $status_text = '';
