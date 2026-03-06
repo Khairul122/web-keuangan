@@ -7,27 +7,13 @@ use Mpdf\Mpdf;
 
 $nama_pimpinan = isset($_SESSION['pimpinan']) ? $_SESSION['pimpinan'] : 'Pimpinan';
 
-if (isset($_GET['tanggal_awal']) && isset($_GET['tanggal_akhir'])) {
-    $tanggal_awal_raw = $_GET['tanggal_awal'];
-    $tanggal_akhir_raw = $_GET['tanggal_akhir'];
-} else {
-    $bulan = isset($_GET['bulan']) ? (int)$_GET['bulan'] : (int)date('n');
-    $tahun = isset($_GET['tahun']) ? (int)$_GET['tahun'] : (int)date('Y');
-
-    if ($bulan < 1 || $bulan > 12) {
-        $bulan = (int)date('n');
-    }
-    if ($tahun < 2000 || $tahun > 2100) {
-        $tahun = (int)date('Y');
-    }
-
-    $tanggal_awal_raw = sprintf('%04d-%02d-01', $tahun, $bulan);
-    $tanggal_akhir_raw = date('Y-m-t', strtotime($tanggal_awal_raw));
-}
+$tanggal_awal_raw = isset($_GET['tanggal_awal']) ? $_GET['tanggal_awal'] : date('Y-m-01');
+$tanggal_akhir_raw = isset($_GET['tanggal_akhir']) ? $_GET['tanggal_akhir'] : date('Y-m-t');
 
 $tanggal_awal = mysqli_real_escape_string($koneksi, $tanggal_awal_raw);
 $tanggal_akhir = mysqli_real_escape_string($koneksi, $tanggal_akhir_raw);
 
+// Samakan logika saldo awal dengan arus-kas-auto.php
 $sql_saldo_awal = "SELECT COALESCE(SUM(jl.debit - jl.kredit), 0) AS saldo_awal
                    FROM journal_lines jl
                    INNER JOIN journal_entries je ON je.id_jurnal = jl.id_jurnal
@@ -41,6 +27,7 @@ if ($result_saldo_awal && $row_saldo = mysqli_fetch_assoc($result_saldo_awal)) {
     $saldo_awal = (float)$row_saldo['saldo_awal'];
 }
 
+// Samakan logika data arus kas dengan arus-kas-auto.php
 $sql_data = "SELECT
                 je.id_jurnal,
                 je.nomor_jurnal,
@@ -162,7 +149,7 @@ ob_start();
 <?php
 $html = ob_get_clean();
 $mpdf->WriteHTML($html);
-$mpdf->Output('Laporan_Arus_Kas.pdf', 'I');
+$mpdf->Output('Laporan_Arus_Kas_Otomatis.pdf', 'I');
 
 mysqli_close($koneksi);
 exit;

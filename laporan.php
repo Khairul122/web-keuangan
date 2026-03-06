@@ -209,7 +209,7 @@ $nama_bulan = [
                                     <td colspan="3" style="text-align: left;">Arus Kas</td>
                                     <td>
                                         <!-- Button untuk modal -->
-                                        <a href="export-arus-kas.php?bulan=<?php echo $bulan; ?>&tahun=<?php echo $tahun; ?>" type="button" class="btn btn-primary btn-md"><i class="fa fa-download"></i></a>
+                                        <a href="export-arus-kas.php?tanggal_awal=<?php echo sprintf('%04d-%02d-01', $tahun, $bulan); ?>&tanggal_akhir=<?php echo date('Y-m-t', strtotime(sprintf('%04d-%02d-01', $tahun, $bulan))); ?>" type="button" class="btn btn-primary btn-md"><i class="fa fa-download"></i></a>
                                     </td>
                                 </tr>
                                 
