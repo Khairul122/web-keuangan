@@ -1,28 +1,32 @@
 <?php
-// Sisipkan file koneksi.php yang berisi koneksi ke database
+require 'cek-sesi.php';
 include('koneksi.php');
 
-// Ambil nilai dari formulir
-$tanggal = $_POST['tanggal'];
-$sumber = $_POST['sumber'];
-$jumlah = $_POST['jumlah'];
-$status = $_POST['status'];
-$id_akun = $_POST['id_akun'] ?? NULL; // Ambil id_akun dari formulir, jika tidak ada set NULL
+$tanggal = mysqli_real_escape_string($koneksi, $_POST['tanggal']);
+$sumber = mysqli_real_escape_string($koneksi, $_POST['sumber']);
+$jumlah = intval($_POST['jumlah']);
+$kas_awal = isset($_POST['kas_awal']) ? intval($_POST['kas_awal']) : 0;
+$status = intval($_POST['status']);
+$id_akun = isset($_POST['id_akun']) && $_POST['id_akun'] !== '' ? intval($_POST['id_akun']) : null;
 
-// Siapkan pernyataan SQL INSERT
-if ($id_akun) {
-    $sql = "INSERT INTO arus_kas (tanggal, sumber, jumlah, status, id_akun) VALUES ('$tanggal', '$sumber', '$jumlah', '$status', '$id_akun')";
-} else {
-    $sql = "INSERT INTO arus_kas (tanggal, sumber, jumlah, status) VALUES ('$tanggal', '$sumber', '$jumlah', '$status')";
+if ($status < 1 || $status > 3) {
+    echo '<script>alert("Kategori aktivitas tidak valid"); window.location.href = "arus-kas-tambah.php";</script>';
+    exit;
 }
 
-// Lakukan pengecekan apakah data berhasil dimasukkan ke dalam database atau tidak
+if ($id_akun !== null) {
+    $sql = "INSERT INTO arus_kas (tanggal, sumber, jumlah, kas_awal, status, id_akun)
+            VALUES ('$tanggal', '$sumber', '$jumlah', '$kas_awal', '$status', '$id_akun')";
+} else {
+    $sql = "INSERT INTO arus_kas (tanggal, sumber, jumlah, kas_awal, status)
+            VALUES ('$tanggal', '$sumber', '$jumlah', '$kas_awal', '$status')";
+}
+
 if ($koneksi->query($sql) === TRUE) {
-    // Jika berhasil, arahkan pengguna ke halaman arus_kas.php
-    echo '<script>alert("Data berhasil ditambahkan"); window.location.href = "arus-kas.php";</script>';
+    echo '<script>alert("Data arus kas berhasil ditambahkan"); window.location.href = "arus-kas.php";</script>';
 } else {
-    echo "Error: " . $sql . "<br>" . $koneksi->error;
+    echo "Error: " . $koneksi->error;
 }
 
-// Tutup koneksi (tidak diperlukan jika Anda menggunakan koneksi persistent)
 $koneksi->close();
+?>
