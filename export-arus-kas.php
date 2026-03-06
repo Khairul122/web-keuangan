@@ -109,16 +109,17 @@ ob_start();
     <thead>
         <tr class="head">
             <th style="width:6%">No</th>
-            <th style="width:34%">Keterangan</th>
-            <th style="width:16%">Bukti/Ref</th>
-            <th style="width:15%" class="right">Penerimaan (Debit)</th>
-            <th style="width:15%" class="right">Pengeluaran (Kredit)</th>
-            <th style="width:14%" class="right">Saldo</th>
+            <th style="width:14%">Tanggal</th>
+            <th style="width:26%">Keterangan</th>
+            <th style="width:14%">Bukti/Ref</th>
+            <th style="width:14%" class="right">Penerimaan (Debit)</th>
+            <th style="width:14%" class="right">Pengeluaran (Kredit)</th>
+            <th style="width:12%" class="right">Saldo</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td colspan="5"><strong>Saldo Awal Periode</strong></td>
+            <td colspan="6"><strong>Saldo Awal Periode</strong></td>
             <td class="right"><strong><?php echo number_format($saldo_awal, 0, ',', '.'); ?></strong></td>
         </tr>
 
@@ -127,6 +128,7 @@ ob_start();
             <?php foreach ($rows as $row): ?>
                 <tr>
                     <td class="center"><?php echo $no++; ?></td>
+                    <td><?php echo date('d-m-Y', strtotime($row['tanggal'])); ?></td>
                     <td><?php echo htmlspecialchars($row['keterangan']); ?></td>
                     <td><?php echo htmlspecialchars($row['nomor_jurnal']); ?></td>
                     <td class="right"><?php echo number_format($row['penerimaan'], 0, ',', '.'); ?></td>
@@ -136,19 +138,19 @@ ob_start();
             <?php endforeach; ?>
         <?php else: ?>
             <tr>
-                <td colspan="6" class="center">Tidak ada data arus kas pada periode ini</td>
+                <td colspan="7" class="center">Tidak ada data arus kas pada periode ini</td>
             </tr>
         <?php endif; ?>
     </tbody>
     <tfoot>
         <tr class="total">
-            <td colspan="3">Total</td>
+            <td colspan="4">Total</td>
             <td class="right"><?php echo number_format($total_penerimaan, 0, ',', '.'); ?></td>
             <td class="right"><?php echo number_format($total_pengeluaran, 0, ',', '.'); ?></td>
             <td class="right"><?php echo number_format($saldo_berjalan, 0, ',', '.'); ?></td>
         </tr>
         <tr>
-            <td colspan="6"><strong>Status: <?php echo $is_balance ? 'Balance' : 'Tidak Balance'; ?></strong></td>
+            <td colspan="7"><strong>Status: <?php echo $is_balance ? 'Balance' : 'Tidak Balance'; ?></strong></td>
         </tr>
     </tfoot>
 </table>

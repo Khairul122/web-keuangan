@@ -116,6 +116,7 @@ require_once 'koneksi.php';
                         <thead>
                             <tr>
                                 <th>No</th>
+                                <th>Tanggal</th>
                                 <th>Keterangan</th>
                                 <th>Bukti/Ref</th>
                                 <th class="text-right">Penerimaan (Debit)</th>
@@ -125,7 +126,7 @@ require_once 'koneksi.php';
                         </thead>
                         <tbody>
                             <tr class="table-light">
-                                <td colspan="5"><strong>Saldo Awal Periode</strong></td>
+                                <td colspan="6"><strong>Saldo Awal Periode</strong></td>
                                 <td class="text-right"><strong><?php echo number_format($saldo_awal, 0, ',', '.'); ?></strong></td>
                             </tr>
 
@@ -134,6 +135,7 @@ require_once 'koneksi.php';
                                 <?php foreach ($rows as $row): ?>
                                     <tr>
                                         <td><?php echo $no++; ?></td>
+                                        <td><?php echo date('d-m-Y', strtotime($row['tanggal'])); ?></td>
                                         <td><?php echo htmlspecialchars($row['keterangan']); ?></td>
                                         <td><?php echo htmlspecialchars($row['nomor_jurnal']); ?></td>
                                         <td class="text-right"><?php echo number_format($row['penerimaan'], 0, ',', '.'); ?></td>
@@ -143,19 +145,19 @@ require_once 'koneksi.php';
                                 <?php endforeach; ?>
                             <?php else: ?>
                                 <tr>
-                                    <td colspan="6" class="text-center">Tidak ada data arus kas pada periode ini</td>
+                                    <td colspan="7" class="text-center">Tidak ada data arus kas pada periode ini</td>
                                 </tr>
                             <?php endif; ?>
                         </tbody>
                         <tfoot>
                             <tr class="table-secondary">
-                                <td colspan="3"><strong>Total</strong></td>
+                                <td colspan="4"><strong>Total</strong></td>
                                 <td class="text-right"><strong><?php echo number_format($total_penerimaan, 0, ',', '.'); ?></strong></td>
                                 <td class="text-right"><strong><?php echo number_format($total_pengeluaran, 0, ',', '.'); ?></strong></td>
                                 <td class="text-right"><strong><?php echo number_format($saldo_berjalan, 0, ',', '.'); ?></strong></td>
                             </tr>
                             <tr>
-                                <td colspan="6">
+                                <td colspan="7">
                                     <strong>Status:</strong>
                                     <span class="badge badge-<?php echo $is_balance ? 'success' : 'danger'; ?>">
                                         <?php echo $is_balance ? 'Balance' : 'Tidak Balance'; ?>
